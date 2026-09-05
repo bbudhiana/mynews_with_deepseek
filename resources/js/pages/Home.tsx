@@ -90,7 +90,7 @@ export default function Home({
                                                                     heroNews
                                                                         .author
                                                                         .name ??
-                                                                        'Author'
+                                                                    'Author'
                                                                 }
                                                                 loading="lazy"
                                                                 decoding="async"
@@ -105,7 +105,7 @@ export default function Home({
                                                         ) : (
                                                             <div
                                                                 aria-hidden="true"
-                                                                className="bg-elevated flex h-6 w-6 items-center justify-center rounded-full text-[10px] font-bold text-ink"
+                                                                className="bg-elevated text-ink flex h-6 w-6 items-center justify-center rounded-full text-[10px] font-bold"
                                                             >
                                                                 {(
                                                                     heroNews
