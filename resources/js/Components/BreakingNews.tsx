@@ -8,7 +8,7 @@ export default function BreakingNews({ items = [] }: BreakingProps) {
     if (!items || items.length === 0) return null;
 
     return (
-        <div className="bg-[#D71920] text-white flex items-center px-4 py-2 text-sm overflow-hidden">
+        <div className="bg-accent text-ink flex items-center px-4 py-2 text-sm overflow-hidden">
             <span className="font-black tracking-wider uppercase text-xs flex-shrink-0 bg-black px-2 py-1 mr-4">
                 BREAKING NEWS
             </span>

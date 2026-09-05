@@ -44,14 +44,14 @@ function ArticleBody({ html }: { html: string }) {
         <>
             <div
                 ref={firstRef}
-                className="article-body text-[#E2E8F0] text-[17px] md:text-[19px] leading-[1.85] font-serif max-w-[68ch]"
+                className="article-body text-ink-body text-[18px] md:text-[19px] leading-[1.85] font-serif max-w-[68ch] min-h-[40vh]"
             />
             <div className="my-12 flex justify-center">
                 <AdBanner position="in-article" />
             </div>
             <div
                 ref={secondRef}
-                className="article-body text-[#E2E8F0] text-[17px] md:text-[19px] leading-[1.85] font-serif max-w-[68ch]"
+                className="article-body text-ink-body text-[18px] md:text-[19px] leading-[1.85] font-serif max-w-[68ch] min-h-[40vh]"
             />
         </>
     );
@@ -62,7 +62,7 @@ export default function Show({ article, relatedNews, popularNews, navCategories 
     return (
         <>
             <Head title={`${article.title} - MyNews`} />
-            <div className="min-h-screen bg-[#0B1220] text-white">
+            <div className="min-h-screen bg-canvas text-ink">
                 <Header categories={navCategories} />
 
                 {/* Top Leaderboard Ad */}
@@ -76,9 +76,9 @@ export default function Show({ article, relatedNews, popularNews, navCategories 
                         <article className="lg:col-span-8">
                             {/* Breadcrumb & Category */}
                             <div className="flex items-center gap-2 text-sm mb-6">
-                                <Link href="/" className="text-[#94A3B8] hover:text-white">Home</Link>
-                                <span className="text-[#475569]">/</span>
-                                <Link href={`/category/${article.category?.slug || 'nasional'}`} className="text-[#D71920] font-bold uppercase tracking-wider">
+                                <Link href="/" className="text-ink-meta hover:text-ink">Home</Link>
+                                <span className="text-ink-faint">/</span>
+                                <Link href={`/category/${article.category?.slug || 'nasional'}`} className="text-accent font-bold uppercase tracking-wider">
                                     {article.category?.name || 'Nasional'}
                                 </Link>
                             </div>
@@ -88,13 +88,13 @@ export default function Show({ article, relatedNews, popularNews, navCategories 
                                 {article.title}
                             </h1>
                             
-                            <div className="flex flex-wrap items-center justify-end gap-4 py-4 border-y border-[#1E293B] mb-8 text-sm text-[#94A3B8]">
+                            <div className="flex flex-wrap items-center justify-end gap-4 py-4 border-y border-hairline mb-8 text-sm text-ink-meta">
                                 <span>{formatDate(article.published_at || article.created_at)}</span>
                                 <span className="flex items-center gap-1">⏱️ 3 menit baca</span>
                             </div>
 
                             {(article.author?.bio || article.author?.name) && (
-                                <div className="bg-[#131E31] border border-[#1E293B] p-4 mb-8 rounded-2xl flex items-start gap-4">
+                                <div className="bg-card border border-hairline p-4 mb-8 rounded-2xl flex items-start gap-4">
                                     {article.author?.profile_photo_path ? (
                                         <img
                                             src={`/storage/${article.author.profile_photo_path}`}
@@ -102,15 +102,15 @@ export default function Show({ article, relatedNews, popularNews, navCategories 
                                             className="w-12 h-12 rounded-full object-cover flex-shrink-0"
                                         />
                                     ) : (
-                                        <div className="w-12 h-12 rounded-full bg-[#1E293B] flex items-center justify-center text-2xl flex-shrink-0">
+                                        <div className="w-12 h-12 rounded-full bg-elevated flex items-center justify-center text-2xl flex-shrink-0">
                                             👤
                                         </div>
                                     )}
                                     <div className="flex-1">
                                         <div className="font-bold text-sm">{article.author.name}</div>
-                                        <div className="text-xs text-[#D71920] mb-2">{article.author.job_title || 'Kontributor'}</div>
+                                        <div className="text-xs text-accent mb-2">{article.author.job_title || 'Kontributor'}</div>
                                         {article.author?.bio && (
-                                            <p className="text-xs text-[#94A3B8] line-clamp-3">{article.author.bio}</p>
+                                            <p className="text-xs text-ink-meta line-clamp-3">{article.author.bio}</p>
                                         )}
                                     </div>
                                 </div>
@@ -121,10 +121,11 @@ export default function Show({ article, relatedNews, popularNews, navCategories 
                                 <img
                                     src={article.featured_image?.url || article.thumbnail?.url || ''}
                                     alt={article.title}
-                                    className="w-full h-auto rounded-2xl bg-[#131E31]"
+                                    fetchpriority="high"
+                                    className="w-full h-auto rounded-2xl bg-card"
                                     onError={(e) => { e.currentTarget.style.display = 'none'; }}
                                 />
-                                <figcaption className="text-xs text-[#64748B] mt-3 text-left">
+                                <figcaption className="text-xs text-ink-subtle mt-3 text-left">
                                     {article.image_caption || article.image_credit
                                         ? `${article.image_caption ?? ''}${article.image_caption && article.image_credit ? ' • ' : ''}${article.image_credit ? `Kredit: ${article.image_credit}` : ''}`.trim()
                                         : 'Dokumentasi Redaksi'}
@@ -135,12 +136,12 @@ export default function Show({ article, relatedNews, popularNews, navCategories 
                             <ArticleBody html={article.body || article.excerpt || ''} />
 
                             {/* Tags */}
-                            <div className="mt-12 pt-6 border-t border-[#1E293B]">
+                            <div className="mt-12 pt-6 border-t border-hairline">
                                 <div className="flex items-center gap-3">
-                                    <span className="text-sm font-bold text-[#94A3B8]">TAGS:</span>
+                                    <span className="text-sm font-bold text-ink-meta">TAGS:</span>
                                     <div className="flex flex-wrap gap-2">
                                         {['Nasional', 'Terkini', 'Pemerintah', 'Sorotan'].map(tag => (
-                                            <Link key={tag} href={`/search?q=${tag.toLowerCase()}`} className="text-xs bg-[#1E293B] hover:bg-[#334155] px-3 py-1.5 rounded-full transition-colors">
+                                            <Link key={tag} href={`/search?q=${tag.toLowerCase()}`} className="text-xs bg-elevated hover:bg-[#334155] px-3 py-1.5 rounded-full transition-colors">
                                                 #{tag}
                                             </Link>
                                         ))}
@@ -149,12 +150,20 @@ export default function Show({ article, relatedNews, popularNews, navCategories 
                             </div>
 
                             {/* Share */}
-                            <div className="mt-8 flex items-center gap-4">
-                                <span className="text-sm font-bold">Bagikan:</span>
-                                <button className="w-10 h-10 rounded-full bg-[#1877F2] flex items-center justify-center hover:opacity-80 transition-opacity">f</button>
-                                <button className="w-10 h-10 rounded-full bg-[#1DA1F2] flex items-center justify-center hover:opacity-80 transition-opacity">𝕏</button>
-                                <button className="w-10 h-10 rounded-full bg-[#25D366] flex items-center justify-center hover:opacity-80 transition-opacity">W</button>
-                                <button className="w-10 h-10 rounded-full bg-[#1E293B] flex items-center justify-center hover:bg-[#334155] transition-colors">🔗</button>
+                            <div className="mt-8 flex items-center gap-3 flex-wrap">
+                                <span className="text-sm font-bold mr-2">Bagikan:</span>
+                                <button type="button" aria-label="Bagikan ke Facebook" className="w-11 h-11 rounded-full bg-[#1877F2] text-ink flex items-center justify-center hover:opacity-80 transition-opacity">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
+                                </button>
+                                <button type="button" aria-label="Bagikan ke X" className="w-11 h-11 rounded-full bg-[#1DA1F2] text-ink flex items-center justify-center hover:opacity-80 transition-opacity">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                                </button>
+                                <button type="button" aria-label="Bagikan ke WhatsApp" className="w-11 h-11 rounded-full bg-[#25D366] text-ink flex items-center justify-center hover:opacity-80 transition-opacity">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                                </button>
+                                <button type="button" aria-label="Salin tautan" className="w-11 h-11 rounded-full bg-elevated text-ink flex items-center justify-center hover:bg-[#334155] transition-colors">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                                </button>
                             </div>
                         </article>
 
@@ -166,19 +175,21 @@ export default function Show({ article, relatedNews, popularNews, navCategories 
 
                                 {/* Related News */}
                                 <section>
-                                    <h3 className="uppercase text-xs tracking-widest font-bold mb-4 text-[#D71920] border-b border-[#1E293B] pb-2">BERITA TERKAIT</h3>
+                                    <h3 className="uppercase text-xs tracking-widest font-bold mb-4 text-accent border-b border-hairline pb-2">BERITA TERKAIT</h3>
                                     <div className="space-y-4">
                                         {relatedNews && relatedNews.map((item) => (
                                             <Link key={item.id} href={`/news/${item.slug}`} className="group flex gap-3 items-start">
                                                 <img
                                                     src={item.featured_image?.url || item.thumbnail?.url || ''}
                                                     alt={item.title}
-                                                    className="w-20 h-16 object-cover rounded-lg bg-[#131E31] flex-shrink-0"
+                                                    loading="lazy"
+                                                    decoding="async"
+                                                    className="w-20 h-16 object-cover rounded-lg bg-card flex-shrink-0"
                                                     onError={(e) => { e.currentTarget.style.display = 'none'; }}
                                                 />
                                                 <div className="flex-1 min-w-0">
-                                                    <h4 className="font-medium text-sm leading-tight group-hover:text-[#D71920] transition-colors line-clamp-2 mb-1">{item.title}</h4>
-                                                    <div className="text-xs text-[#64748B]">{formatDate(item.published_at)}</div>
+                                                    <h4 className="font-medium text-sm leading-tight group-hover:text-accent transition-colors line-clamp-2 mb-1">{item.title}</h4>
+                                                    <div className="text-xs text-ink-subtle">{formatDate(item.published_at)}</div>
                                                 </div>
                                             </Link>
                                         ))}
@@ -187,7 +198,7 @@ export default function Show({ article, relatedNews, popularNews, navCategories 
 
                                 {/* Popular News */}
                                 <section>
-                                    <h3 className="uppercase text-xs tracking-widest font-bold mb-4 text-[#D71920] border-b border-[#1E293B] pb-2">SEDANG POPULER</h3>
+                                    <h3 className="uppercase text-xs tracking-widest font-bold mb-4 text-accent border-b border-hairline pb-2">SEDANG POPULER</h3>
                                     <div className="space-y-4">
                                         {popularNews && popularNews.map((item, index) => (
                                             <Link key={item.id || index} href={`/news/${item.slug}`} className="group flex gap-3 items-start">
@@ -195,12 +206,14 @@ export default function Show({ article, relatedNews, popularNews, navCategories 
                                                 <img
                                                     src={item.featured_image?.url || item.thumbnail?.url || ''}
                                                     alt={item.title}
-                                                    className="w-16 h-12 object-cover rounded bg-[#131E31] flex-shrink-0"
+                                                    loading="lazy"
+                                                    decoding="async"
+                                                    className="w-16 h-12 object-cover rounded bg-card flex-shrink-0"
                                                     onError={(e) => { e.currentTarget.style.display = 'none'; }}
                                                 />
                                                 <div className="flex-1 min-w-0">
-                                                    <div className="font-medium text-sm leading-tight line-clamp-2 group-hover:text-[#D71920] transition-colors">{item.title}</div>
-                                                    <div className="text-xs text-[#64748B] mt-1">{formatDate(item.published_at)}</div>
+                                                    <div className="font-medium text-sm leading-tight line-clamp-2 group-hover:text-accent transition-colors">{item.title}</div>
+                                                    <div className="text-xs text-ink-subtle mt-1">{formatDate(item.published_at)}</div>
                                                 </div>
                                             </Link>
                                         ))}

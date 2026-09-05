@@ -25,12 +25,12 @@ export default function AdBanner({ position, className = '' }: AdBannerProps) {
 
     return (
         <div className={`my-6 flex flex-col items-center justify-center ${className}`}>
-            <span className="text-[10px] tracking-widest text-[#64748B] uppercase mb-1">
+            <span className="text-[10px] tracking-widest text-ink-subtle uppercase mb-1">
                 ADVERTISEMENT
             </span>
-            <div className={`${config.size} bg-[#131E31] border border-dashed border-[#334155] flex flex-col items-center justify-center p-4 text-center`}>
-                <span className="text-xs font-bold text-[#94A3B8]">{config.label}</span>
-                <span className="text-[10px] text-[#475569] mt-1">Sponsor Area</span>
+            <div className={`${config.size} bg-card border border-dashed border-[#334155] flex flex-col items-center justify-center p-4 text-center`}>
+                <span className="text-xs font-bold text-ink-meta">{config.label}</span>
+                <span className="text-[10px] text-ink-faint mt-1">Sponsor Area</span>
             </div>
         </div>
     );
