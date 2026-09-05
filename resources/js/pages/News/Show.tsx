@@ -152,7 +152,7 @@ export default function Show({
                                         ''
                                     }
                                     alt={article.title}
-                                    fetchpriority="high"
+                                    fetchPriority="high"
                                     className="bg-card h-auto w-full rounded-2xl"
                                     onError={(e) => {
                                         e.currentTarget.style.display = 'none';

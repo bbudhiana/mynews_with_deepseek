@@ -61,7 +61,7 @@ export default function Home({
                                                     ''
                                                 }
                                                 alt={heroNews.title}
-                                                fetchpriority="high"
+                                                fetchPriority="high"
                                                 className="bg-card h-[420px] w-full object-cover transition-transform duration-500 group-hover:scale-[1.02] md:h-[480px]"
                                                 onError={(e) => {
                                                     e.currentTarget.style.display =
