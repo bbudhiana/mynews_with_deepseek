@@ -1,0 +1,30 @@
+{
+    "$schema": "https://opencode.ai/config.json",
+    "mcp": {
+        "laravel-boost": {
+            "type": "local",
+            "enabled": true,
+            "command": [
+                "docker",
+                "exec",
+                "-i",
+                "frankenphp",
+                "php",
+                "/var/www/html/mynews_with_deepseek/artisan",
+                "boost:mcp"
+            ]
+        },
+        "context7": {
+            "type": "local",
+            "command": ["npx", "-y", "@upstash/context7-mcp"],
+            "enabled": true
+        }
+    },
+    "permission": {
+        "skill": {
+            "*": "allow",
+            "frontend-design": "allow",
+            "ui-ux-pro-max": "allow"
+        }
+    }
+}
