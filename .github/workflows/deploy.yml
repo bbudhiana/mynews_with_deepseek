@@ -117,7 +117,7 @@ jobs:
             mkdir -p "$(dirname "${FIRST_DEPLOY_MARKER}")"
             touch "${FIRST_DEPLOY_MARKER}"
 
-            cd /var/www/html/newsai.my.id/public && ln -s /var/www/html/cmsbyai.indoez.com/storage/app/public storage
+            cd /var/www/html/newsai.my.id/public && ln -s /var/www/html/cmsbyai.indoez.com/storage/app/public storage && cd /var/www/html/newsai.my.id
           fi
 
           php artisan queue:restart || true
