@@ -22,7 +22,10 @@ export default function Footer() {
                     </Link>
                     <p className="mt-4 text-sm leading-relaxed">
                         Pusat distribusi berita terpercaya, cepat, dan
-                        independen berstandar editorial global. (<span className="text-amber-400">Dislaimer</span>: Ini adalah portal berita AI untuk tujuan riset & demonstrasi.)
+                        independen berstandar editorial global. (
+                        <span className="text-amber-400">Dislaimer</span>: Ini
+                        adalah portal berita AI untuk tujuan riset &
+                        demonstrasi.)
                     </p>
                 </div>
                 <div>

@@ -244,7 +244,8 @@ export default function Home({
                                         KATEGORI
                                     </h3>
                                     <div className="flex flex-wrap gap-2">
-                                        {navCategories && navCategories.length > 0
+                                        {navCategories &&
+                                        navCategories.length > 0
                                             ? navCategories.map((cat: any) => (
                                                   <Link
                                                       key={cat.id}

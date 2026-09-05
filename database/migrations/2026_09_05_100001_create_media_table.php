@@ -8,14 +8,16 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('media', function (Blueprint $table) {
-            $table->id();
-            $table->string('path')->nullable();
-            $table->string('file_name')->nullable();
-            $table->string('mime_type')->nullable();
-            $table->unsignedBigInteger('size')->nullable();
-            $table->timestamps();
-        });
+        if (! Schema::hasTable('media')) {
+            Schema::create('media', function (Blueprint $table) {
+                $table->id();
+                $table->string('path')->nullable();
+                $table->string('file_name')->nullable();
+                $table->string('mime_type')->nullable();
+                $table->unsignedBigInteger('size')->nullable();
+                $table->timestamps();
+            });
+        }
     }
 
     public function down(): void
