@@ -81,10 +81,42 @@ export default function Home({
                                                     {heroNews.title}
                                                 </h1>
                                                 <div className="text-ink/80 flex items-center gap-3 text-[11px]">
-                                                    <div className="flex items-center gap-1">
-                                                        <span className="text-accent">
-                                                            👤
-                                                        </span>
+                                                    <div className="flex items-center gap-2">
+                                                        {heroNews.author
+                                                            ?.profile_photo_path ? (
+                                                            <img
+                                                                src={`/storage/${heroNews.author.profile_photo_path}`}
+                                                                alt={
+                                                                    heroNews
+                                                                        .author
+                                                                        .name ??
+                                                                        'Author'
+                                                                }
+                                                                loading="lazy"
+                                                                decoding="async"
+                                                                className="h-6 w-6 rounded-full object-cover ring-1 ring-white/20"
+                                                                onError={(
+                                                                    e,
+                                                                ) => {
+                                                                    e.currentTarget.style.display =
+                                                                        'none';
+                                                                }}
+                                                            />
+                                                        ) : (
+                                                            <div
+                                                                aria-hidden="true"
+                                                                className="bg-elevated flex h-6 w-6 items-center justify-center rounded-full text-[10px] font-bold text-ink"
+                                                            >
+                                                                {(
+                                                                    heroNews
+                                                                        .author
+                                                                        ?.name ??
+                                                                    'R'
+                                                                )
+                                                                    .charAt(0)
+                                                                    .toUpperCase()}
+                                                            </div>
+                                                        )}
                                                         <span>
                                                             {heroNews.author
                                                                 ?.name ||
