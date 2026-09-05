@@ -244,25 +244,35 @@ export default function Home({
                                         KATEGORI
                                     </h3>
                                     <div className="flex flex-wrap gap-2">
-                                        {[
-                                            'Nasional',
-                                            'Internasional',
-                                            'Politik',
-                                            'Ekonomi',
-                                            'Teknologi',
-                                            'Olahraga',
-                                            'Lifestyle',
-                                            'Entertainment',
-                                            'Kesehatan',
-                                        ].map((cat) => (
-                                            <a
-                                                key={cat}
-                                                href={`/category/${cat.toLowerCase()}`}
-                                                className="bg-elevated hover:bg-accent hover:text-ink rounded-full px-4 py-2 text-xs transition-colors"
-                                            >
-                                                {cat}
-                                            </a>
-                                        ))}
+                                        {navCategories && navCategories.length > 0
+                                            ? navCategories.map((cat: any) => (
+                                                  <Link
+                                                      key={cat.id}
+                                                      href={`/category/${cat.slug}`}
+                                                      className="bg-elevated hover:bg-accent hover:text-ink rounded-full px-4 py-2 text-xs transition-colors"
+                                                  >
+                                                      {cat.name}
+                                                  </Link>
+                                              ))
+                                            : [
+                                                  'Nasional',
+                                                  'Internasional',
+                                                  'Politik',
+                                                  'Ekonomi',
+                                                  'Teknologi',
+                                                  'Olahraga',
+                                                  'Lifestyle',
+                                                  'Entertainment',
+                                                  'Kesehatan',
+                                              ].map((cat) => (
+                                                  <Link
+                                                      key={cat}
+                                                      href={`/category/${cat.toLowerCase()}`}
+                                                      className="bg-elevated hover:bg-accent hover:text-ink rounded-full px-4 py-2 text-xs transition-colors"
+                                                  >
+                                                      {cat}
+                                                  </Link>
+                                              ))}
                                     </div>
                                 </section>
                             </div>

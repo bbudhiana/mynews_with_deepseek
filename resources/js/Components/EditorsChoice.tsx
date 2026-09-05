@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { formatDate } from '@/lib/date';
+import { formatDateShort } from '@/lib/date';
 
 interface ArticleItem {
     id: number;
@@ -75,7 +75,7 @@ export default function EditorsChoice({ items = [] }: Props) {
                         <div className="text-ink-subtle border-hairline mt-4 flex items-center justify-between border-t pt-3 text-xs">
                             <span>Oleh {item.author?.name || 'Redaksi'}</span>
                             <span>
-                                {formatDate(
+                                {formatDateShort(
                                     item.published_at || item.created_at,
                                 )}
                             </span>
