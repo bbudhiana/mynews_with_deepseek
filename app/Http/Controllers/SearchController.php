@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Content;
 use App\Models\Category;
+use App\Models\Content;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -18,8 +18,8 @@ class SearchController extends Controller
             ->when($query, function ($q) use ($query) {
                 $q->where(function ($subQ) use ($query) {
                     $subQ->where('title', 'like', "%{$query}%")
-                         ->orWhere('excerpt', 'like', "%{$query}%")
-                         ->orWhere('body', 'like', "%{$query}%");
+                        ->orWhere('excerpt', 'like', "%{$query}%")
+                        ->orWhere('body', 'like', "%{$query}%");
                 });
             })
             ->latest('published_at')
