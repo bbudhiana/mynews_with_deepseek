@@ -4,6 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property string|null $path
+ * @property-read string|null $url
+ */
 class Media extends Model
 {
     protected $table = 'media';
@@ -12,8 +17,8 @@ class Media extends Model
 
     protected $appends = ['url'];
 
-    public function getUrlAttribute()
+    public function getUrlAttribute(): ?string
     {
-        return asset('storage/'.$this->path);
+        return $this->path ? asset('storage/'.$this->path) : null;
     }
 }

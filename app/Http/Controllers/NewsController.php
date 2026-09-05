@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Content;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class NewsController extends Controller
 {
-    public function show($slug)
+    public function show(string $slug): Response
     {
         $article = Content::with(['category', 'author', 'featuredImage', 'thumbnail'])
             ->where('slug', $slug)

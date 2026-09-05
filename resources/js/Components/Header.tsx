@@ -31,7 +31,7 @@ export default function Header({ categories = [] }: Props) {
                             href="/"
                             className="text-ink text-2xl font-bold tracking-tighter"
                         >
-                            My<span className="text-accent">News</span>
+                            News<span className="text-accent">AI</span>
                         </Link>
                         {categories.length > 0 && (
                             <nav className="hidden items-center gap-6 text-sm font-medium md:flex">

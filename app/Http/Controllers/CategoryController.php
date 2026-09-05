@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Content;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class CategoryController extends Controller
 {
-    public function index($slug)
+    public function index(string $slug): Response
     {
         $category = Category::where('slug', $slug)->firstOrFail();
 
