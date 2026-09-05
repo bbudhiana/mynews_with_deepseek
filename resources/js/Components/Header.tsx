@@ -23,15 +23,18 @@ export default function Header({ categories = [] }: Props) {
     };
 
     return (
-        <header className="sticky top-0 z-50 border-b border-hairline bg-canvas/95 text-ink">
+        <header className="border-hairline bg-canvas/95 text-ink sticky top-0 z-50 border-b">
             <div className="mx-auto max-w-7xl px-4 py-4">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-8">
-                        <Link href="/" className="text-2xl font-bold tracking-tighter text-ink">
+                        <Link
+                            href="/"
+                            className="text-ink text-2xl font-bold tracking-tighter"
+                        >
                             My<span className="text-accent">News</span>
                         </Link>
                         {categories.length > 0 && (
-                            <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
+                            <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
                                 {categories.map((cat) => (
                                     <Link
                                         key={cat.id}
@@ -52,14 +55,21 @@ export default function Header({ categories = [] }: Props) {
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 placeholder="Cari berita..."
                                 aria-label="Cari berita"
-                                className="w-48 md:w-64 bg-elevated border border-[#334155] py-2 px-4 text-sm text-ink focus:outline-none focus:border-accent transition-colors placeholder-ink-meta"
+                                className="bg-elevated text-ink focus:border-accent placeholder-ink-meta w-48 border border-[#334155] px-4 py-2 text-sm transition-colors focus:outline-none md:w-64"
                             />
                             <button
                                 type="submit"
-                                className="absolute right-0 top-0 h-full px-3 text-ink-meta hover:text-accent transition-colors"
+                                className="text-ink-meta hover:text-accent absolute top-0 right-0 h-full px-3 transition-colors"
                                 aria-label="Kirim pencarian"
                             >
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <svg
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                >
                                     <circle cx="11" cy="11" r="8"></circle>
                                     <path d="m21 21-4.35-4.35"></path>
                                 </svg>
@@ -67,25 +77,39 @@ export default function Header({ categories = [] }: Props) {
                         </form>
                         <Link
                             href="/login"
-                            className="px-5 py-2 text-sm font-bold bg-accent text-ink hover:bg-red-700 transition-colors"
+                            className="bg-accent text-ink px-5 py-2 text-sm font-bold transition-colors hover:bg-red-700"
                         >
                             MASUK
                         </Link>
                         {/* Mobile hamburger */}
                         <button
-                            className="md:hidden w-11 h-11 flex items-center justify-center text-ink-meta hover:text-ink transition-colors"
+                            className="text-ink-meta hover:text-ink flex h-11 w-11 items-center justify-center transition-colors md:hidden"
                             aria-label={mobileOpen ? 'Tutup menu' : 'Buka menu'}
                             aria-expanded={mobileOpen}
                             aria-controls="mobile-nav"
                             onClick={() => setMobileOpen(!mobileOpen)}
                         >
                             {mobileOpen ? (
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <path d="M18 6L6 18M6 6l12 12"/>
+                                <svg
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                >
+                                    <path d="M18 6L6 18M6 6l12 12" />
                                 </svg>
                             ) : (
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <path d="M4 6h16M4 12h16M4 18h16"/>
+                                <svg
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                >
+                                    <path d="M4 6h16M4 12h16M4 18h16" />
                                 </svg>
                             )}
                         </button>
@@ -96,14 +120,14 @@ export default function Header({ categories = [] }: Props) {
                 {mobileOpen && categories.length > 0 && (
                     <nav
                         id="mobile-nav"
-                        className="md:hidden mt-4 pt-4 border-t border-hairline grid grid-cols-2 gap-2"
+                        className="border-hairline mt-4 grid grid-cols-2 gap-2 border-t pt-4 md:hidden"
                         aria-label="Navigasi kategori"
                     >
                         {categories.map((cat) => (
                             <Link
                                 key={cat.id}
                                 href={`/category/${cat.slug}`}
-                                className="py-3 px-4 text-sm font-medium hover:text-accent transition-colors bg-card rounded-xl text-center"
+                                className="hover:text-accent bg-card rounded-xl px-4 py-3 text-center text-sm font-medium transition-colors"
                                 onClick={() => setMobileOpen(false)}
                             >
                                 {cat.name}

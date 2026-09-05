@@ -17,11 +17,19 @@ interface Props {
     navCategories: any[];
 }
 
-export default function Home({ breakingNews, heroNews, latestNews, popularNews, editorsChoice, categoriesList, navCategories }: Props) {
+export default function Home({
+    breakingNews,
+    heroNews,
+    latestNews,
+    popularNews,
+    editorsChoice,
+    categoriesList,
+    navCategories,
+}: Props) {
     return (
         <>
             <Head title="MyNews - Berita Terkini Indonesia" />
-            <div className="min-h-screen bg-canvas text-ink">
+            <div className="bg-canvas text-ink min-h-screen">
                 <Header categories={navCategories} />
 
                 {/* Breaking News */}
@@ -33,47 +41,71 @@ export default function Home({ breakingNews, heroNews, latestNews, popularNews, 
                 </div>
 
                 <main className="mx-auto max-w-7xl px-4 py-4">
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
                         {/* Main Content */}
-                        <div className="lg:col-span-8 space-y-12">
+                        <div className="space-y-12 lg:col-span-8">
                             {/* Hero - Kompas.com style headline */}
                             {heroNews ? (
                                 <article className="group">
                                     {/* Photo Section with overlays */}
-                                    <Link href={`/news/${heroNews.slug}`} className="block">
+                                    <Link
+                                        href={`/news/${heroNews.slug}`}
+                                        className="block"
+                                    >
                                         <div className="relative overflow-hidden rounded-2xl">
                                             <img
-                                                src={heroNews.featured_image?.url || heroNews.thumbnail?.url || ''}
+                                                src={
+                                                    heroNews.featured_image
+                                                        ?.url ||
+                                                    heroNews.thumbnail?.url ||
+                                                    ''
+                                                }
                                                 alt={heroNews.title}
                                                 fetchpriority="high"
-                                                className="w-full h-[420px] md:h-[480px] object-cover bg-card group-hover:scale-[1.02] transition-transform duration-500"
-                                                onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                                                className="bg-card h-[420px] w-full object-cover transition-transform duration-500 group-hover:scale-[1.02] md:h-[480px]"
+                                                onError={(e) => {
+                                                    e.currentTarget.style.display =
+                                                        'none';
+                                                }}
                                             />
 
                                             {/* Category badge - top left */}
-                                            <div className="absolute top-4 left-4 bg-accent text-ink text-[10px] font-bold px-2.5 py-1 uppercase tracking-wider shadow-md">
-                                                {heroNews.category?.name || 'NASIONAL'}
+                                            <div className="bg-accent text-ink absolute top-4 left-4 px-2.5 py-1 text-[10px] font-bold tracking-wider uppercase shadow-md">
+                                                {heroNews.category?.name ||
+                                                    'NASIONAL'}
                                             </div>
 
                                             {/* Bottom gradient overlay for title readability */}
-                                            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/95 via-black/60 to-transparent pt-16 pb-5 px-5">
-                                                <h1 className="text-xl md:text-2xl lg:text-3xl font-bold leading-tight mb-2 group-hover:text-accent transition-colors text-ink">
+                                            <div className="absolute right-0 bottom-0 left-0 bg-gradient-to-t from-black/95 via-black/60 to-transparent px-5 pt-16 pb-5">
+                                                <h1 className="group-hover:text-accent text-ink mb-2 text-xl leading-tight font-bold transition-colors md:text-2xl lg:text-3xl">
                                                     {heroNews.title}
                                                 </h1>
-                                                <div className="flex items-center gap-3 text-[11px] text-ink/80">
+                                                <div className="text-ink/80 flex items-center gap-3 text-[11px]">
                                                     <div className="flex items-center gap-1">
-                                                        <span className="text-accent">👤</span>
-                                                        <span>{heroNews.author?.name || 'Redaksi'}</span>
+                                                        <span className="text-accent">
+                                                            👤
+                                                        </span>
+                                                        <span>
+                                                            {heroNews.author
+                                                                ?.name ||
+                                                                'Redaksi'}
+                                                        </span>
                                                     </div>
                                                     <span>•</span>
-                                                    <span>{formatDateShort(heroNews.published_at || heroNews.created_at)}</span>
+                                                    <span>
+                                                        {formatDateShort(
+                                                            heroNews.published_at ||
+                                                                heroNews.created_at,
+                                                        )}
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
 
                                         {/* Excerpt below photo */}
-                                        <p className="text-ink-muted text-sm md:text-base mt-4 leading-relaxed line-clamp-2">
-                                            {heroNews.excerpt || heroNews.sub_title}
+                                        <p className="text-ink-muted mt-4 line-clamp-2 text-sm leading-relaxed md:text-base">
+                                            {heroNews.excerpt ||
+                                                heroNews.sub_title}
                                         </p>
                                     </Link>
                                 </article>
@@ -84,53 +116,83 @@ export default function Home({ breakingNews, heroNews, latestNews, popularNews, 
 
                             {/* Latest News */}
                             <section>
-                                <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
+                                <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold">
                                     <span className="text-accent">●</span>
                                     BERITA TERBARU
                                 </h2>
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    {latestNews && latestNews.map((news) => (
-                                        <article key={news.id} className="group">
-                                            <div className="bg-elevated rounded-2xl overflow-hidden flex flex-col justify-between h-full">
-                                                <div>
-                                                    <img
-                                                        src={news.featured_image?.url || news.thumbnail?.url || ''}
-                                                        alt={news.title}
-                                                        loading="lazy"
-                                                        decoding="async"
-                                                        className="w-full h-48 object-cover bg-card"
-                                                        onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                                                    />
-                                                    <div className="p-6">
-                                                        <div className="text-accent text-xs font-bold uppercase tracking-widest mb-2">
-                                                            {news.category?.name || 'BERITA'}
+                                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                                    {latestNews &&
+                                        latestNews.map((news) => (
+                                            <article
+                                                key={news.id}
+                                                className="group"
+                                            >
+                                                <div className="bg-elevated flex h-full flex-col justify-between overflow-hidden rounded-2xl">
+                                                    <div>
+                                                        <img
+                                                            src={
+                                                                news
+                                                                    .featured_image
+                                                                    ?.url ||
+                                                                news.thumbnail
+                                                                    ?.url ||
+                                                                ''
+                                                            }
+                                                            alt={news.title}
+                                                            loading="lazy"
+                                                            decoding="async"
+                                                            className="bg-card h-48 w-full object-cover"
+                                                            onError={(e) => {
+                                                                e.currentTarget.style.display =
+                                                                    'none';
+                                                            }}
+                                                        />
+                                                        <div className="p-6">
+                                                            <div className="text-accent mb-2 text-xs font-bold tracking-widest uppercase">
+                                                                {news.category
+                                                                    ?.name ||
+                                                                    'BERITA'}
+                                                            </div>
+                                                            <Link
+                                                                href={`/news/${news.slug}`}
+                                                            >
+                                                                <h3 className="group-hover:text-accent mb-3 line-clamp-2 text-lg leading-tight font-semibold transition-colors">
+                                                                    {news.title}
+                                                                </h3>
+                                                            </Link>
+                                                            <p className="text-ink-meta mb-4 line-clamp-2 text-sm">
+                                                                {news.excerpt}
+                                                            </p>
                                                         </div>
-                                                        <Link href={`/news/${news.slug}`}>
-                                                            <h3 className="font-semibold text-lg leading-tight mb-3 group-hover:text-accent transition-colors line-clamp-2">
-                                                                {news.title}
-                                                            </h3>
+                                                    </div>
+                                                    <div className="text-ink-meta flex items-center justify-between border-t border-[#334155]/40 px-6 pt-4 pb-6 text-xs">
+                                                        <span>
+                                                            {formatDate(
+                                                                news.published_at ||
+                                                                    news.created_at,
+                                                            )}
+                                                        </span>
+                                                        <Link
+                                                            href={`/news/${news.slug}`}
+                                                            className="text-accent font-medium"
+                                                        >
+                                                            Baca →
                                                         </Link>
-                                                        <p className="text-ink-meta text-sm line-clamp-2 mb-4">
-                                                            {news.excerpt}
-                                                        </p>
                                                     </div>
                                                 </div>
-                                                <div className="px-6 pb-6 text-ink-meta text-xs flex justify-between items-center border-t border-[#334155]/40 pt-4">
-                                                    <span>{formatDate(news.published_at || news.created_at)}</span>
-                                                    <Link href={`/news/${news.slug}`} className="text-accent font-medium">
-                                                        Baca →
-                                                    </Link>
-                                                </div>
-                                            </div>
-                                        </article>
-                                    ))}
+                                            </article>
+                                        ))}
                                 </div>
                             </section>
 
                             {/* Category News Blocks */}
-                            {categoriesList && categoriesList.map((category) => (
-                                <CategoryNews key={category.id} data={category} />
-                            ))}
+                            {categoriesList &&
+                                categoriesList.map((category) => (
+                                    <CategoryNews
+                                        key={category.id}
+                                        data={category}
+                                    />
+                                ))}
                         </div>
 
                         {/* Sidebar */}
@@ -138,23 +200,38 @@ export default function Home({ breakingNews, heroNews, latestNews, popularNews, 
                             <div className="sticky top-24 space-y-10">
                                 {/* Popular News */}
                                 <section>
-                                    <h3 className="uppercase text-xs tracking-widest font-bold mb-4 text-accent">BERITA POPULER</h3>
+                                    <h3 className="text-accent mb-4 text-xs font-bold tracking-widest uppercase">
+                                        BERITA POPULER
+                                    </h3>
                                     <div className="space-y-6">
-                                        {popularNews && popularNews.map((item, index) => (
-                                            <div key={item.id || index} className="flex gap-4">
-                                                <div aria-hidden="true" className="text-4xl font-black text-[#1E293B] w-8">{index + 1}</div>
-                                                <div className="flex-1">
-                                                    <Link href={`/news/${item.slug}`}>
-                                                        <div className="font-medium leading-tight line-clamp-2 hover:text-accent transition-colors">
-                                                            {item.title}
+                                        {popularNews &&
+                                            popularNews.map((item, index) => (
+                                                <div
+                                                    key={item.id || index}
+                                                    className="flex gap-4"
+                                                >
+                                                    <div
+                                                        aria-hidden="true"
+                                                        className="w-8 text-4xl font-black text-[#1E293B]"
+                                                    >
+                                                        {index + 1}
+                                                    </div>
+                                                    <div className="flex-1">
+                                                        <Link
+                                                            href={`/news/${item.slug}`}
+                                                        >
+                                                            <div className="hover:text-accent line-clamp-2 leading-tight font-medium transition-colors">
+                                                                {item.title}
+                                                            </div>
+                                                        </Link>
+                                                        <div className="text-ink-subtle mt-1 text-xs">
+                                                            {formatDate(
+                                                                item.published_at,
+                                                            )}
                                                         </div>
-                                                    </Link>
-                                                    <div className="text-xs text-ink-subtle mt-1">
-                                                        {formatDate(item.published_at)}
                                                     </div>
                                                 </div>
-                                            </div>
-                                        ))}
+                                            ))}
                                     </div>
                                 </section>
 
@@ -163,13 +240,25 @@ export default function Home({ breakingNews, heroNews, latestNews, popularNews, 
 
                                 {/* Categories */}
                                 <section>
-                                    <h3 className="uppercase text-xs tracking-widest font-bold mb-4">KATEGORI</h3>
+                                    <h3 className="mb-4 text-xs font-bold tracking-widest uppercase">
+                                        KATEGORI
+                                    </h3>
                                     <div className="flex flex-wrap gap-2">
-                                        {["Nasional", "Internasional", "Politik", "Ekonomi", "Teknologi", "Olahraga", "Lifestyle", "Entertainment", "Kesehatan"].map((cat) => (
+                                        {[
+                                            'Nasional',
+                                            'Internasional',
+                                            'Politik',
+                                            'Ekonomi',
+                                            'Teknologi',
+                                            'Olahraga',
+                                            'Lifestyle',
+                                            'Entertainment',
+                                            'Kesehatan',
+                                        ].map((cat) => (
                                             <a
                                                 key={cat}
                                                 href={`/category/${cat.toLowerCase()}`}
-                                                className="text-xs bg-elevated hover:bg-accent hover:text-ink px-4 py-2 rounded-full transition-colors"
+                                                className="bg-elevated hover:bg-accent hover:text-ink rounded-full px-4 py-2 text-xs transition-colors"
                                             >
                                                 {cat}
                                             </a>

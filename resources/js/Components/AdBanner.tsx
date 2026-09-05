@@ -1,5 +1,9 @@
 interface AdBannerProps {
-    position: 'top-leaderboard' | 'sidebar' | 'in-article' | 'bottom-leaderboard';
+    position:
+        | 'top-leaderboard'
+        | 'sidebar'
+        | 'in-article'
+        | 'bottom-leaderboard';
     className?: string;
 }
 
@@ -9,7 +13,7 @@ export default function AdBanner({ position, className = '' }: AdBannerProps) {
             size: 'w-full max-w-[728px] h-[90px]',
             label: 'LEADERBOARD BANNER (728x90)',
         },
-        'sidebar': {
+        sidebar: {
             size: 'w-[300px] h-[250px] mx-auto',
             label: 'MEDIUM RECTANGLE (300x250)',
         },
@@ -24,13 +28,21 @@ export default function AdBanner({ position, className = '' }: AdBannerProps) {
     }[position];
 
     return (
-        <div className={`my-6 flex flex-col items-center justify-center ${className}`}>
-            <span className="text-[10px] tracking-widest text-ink-subtle uppercase mb-1">
+        <div
+            className={`my-6 flex flex-col items-center justify-center ${className}`}
+        >
+            <span className="text-ink-subtle mb-1 text-[10px] tracking-widest uppercase">
                 ADVERTISEMENT
             </span>
-            <div className={`${config.size} bg-card border border-dashed border-[#334155] flex flex-col items-center justify-center p-4 text-center`}>
-                <span className="text-xs font-bold text-ink-meta">{config.label}</span>
-                <span className="text-[10px] text-ink-faint mt-1">Sponsor Area</span>
+            <div
+                className={`${config.size} bg-card flex flex-col items-center justify-center border border-dashed border-[#334155] p-4 text-center`}
+            >
+                <span className="text-ink-meta text-xs font-bold">
+                    {config.label}
+                </span>
+                <span className="text-ink-faint mt-1 text-[10px]">
+                    Sponsor Area
+                </span>
             </div>
         </div>
     );

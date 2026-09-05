@@ -13,19 +13,19 @@
         'Times New Roman', serif;
 
     /* Design tokens */
-    --color-canvas:     #0B1220;  /* page background */
-    --color-card:       #131E31;  /* card / figure bg */
-    --color-hairline:   #1E293B;  /* borders */
-    --color-elevated:   #1E293B;  /* elevated surfaces */
-    --color-ink:        #FFFFFF;  /* primary text */
-    --color-ink-strong: #F8FAFC;  /* headings */
-    --color-ink-body:   #E2E8F0;  /* article body */
-    --color-ink-muted:  #CBD5E1;  /* secondary text */
-    --color-ink-meta:   #94A3B8;  /* metadata, captions */
-    --color-ink-subtle: #64748B;  /* tertiary, timestamps */
-    --color-ink-faint:  #475569;  /* faint dividers / breadcrumbs */
-    --color-accent:     #D71920;  /* editorial red — CTAs, breaking, links */
-    --color-link-hover: #EF4444;  /* hover state for accent links */
+    --color-canvas: #0b1220; /* page background */
+    --color-card: #131e31; /* card / figure bg */
+    --color-hairline: #1e293b; /* borders */
+    --color-elevated: #1e293b; /* elevated surfaces */
+    --color-ink: #ffffff; /* primary text */
+    --color-ink-strong: #f8fafc; /* headings */
+    --color-ink-body: #e2e8f0; /* article body */
+    --color-ink-muted: #cbd5e1; /* secondary text */
+    --color-ink-meta: #94a3b8; /* metadata, captions */
+    --color-ink-subtle: #64748b; /* tertiary, timestamps */
+    --color-ink-faint: #475569; /* faint dividers / breadcrumbs */
+    --color-accent: #d71920; /* editorial red — CTAs, breaking, links */
+    --color-link-hover: #ef4444; /* hover state for accent links */
 }
 
 @layer components {

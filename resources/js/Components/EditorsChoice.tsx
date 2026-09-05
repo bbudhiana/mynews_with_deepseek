@@ -22,46 +22,63 @@ export default function EditorsChoice({ items = [] }: Props) {
     if (!items || items.length === 0) return null;
 
     return (
-        <section className="bg-[#0F172A] border border-hairline p-6 mb-12">
-            <div className="flex items-center justify-between border-b border-hairline pb-4 mb-6">
+        <section className="border-hairline mb-12 border bg-[#0F172A] p-6">
+            <div className="border-hairline mb-6 flex items-center justify-between border-b pb-4">
                 <div className="flex items-center gap-3">
-                    <span className="bg-accent text-ink text-[10px] font-black px-2 py-0.5 tracking-wider uppercase">
+                    <span className="bg-accent text-ink px-2 py-0.5 text-[10px] font-black tracking-wider uppercase">
                         KURASI
                     </span>
-                    <h2 className="text-xl font-bold tracking-tight text-ink flex items-center gap-2">
+                    <h2 className="text-ink flex items-center gap-2 text-xl font-bold tracking-tight">
                         PILIHAN EDITOR
                     </h2>
                 </div>
-                <span className="text-xs text-ink-meta">Edisi Khusus Redaksi</span>
+                <span className="text-ink-meta text-xs">
+                    Edisi Khusus Redaksi
+                </span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
                 {items.map((item) => (
-                    <article key={item.id} className="group flex flex-col justify-between">
+                    <article
+                        key={item.id}
+                        className="group flex flex-col justify-between"
+                    >
                         <div>
-                            <div className="relative overflow-hidden mb-3">
+                            <div className="relative mb-3 overflow-hidden">
                                 <img
-                                    src={item.featured_image?.url || item.thumbnail?.url || ''}
+                                    src={
+                                        item.featured_image?.url ||
+                                        item.thumbnail?.url ||
+                                        ''
+                                    }
                                     alt={item.title}
                                     loading="lazy"
                                     decoding="async"
-                                    className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300 bg-card"
-                                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                                    className="bg-card h-40 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                    onError={(e) => {
+                                        e.currentTarget.style.display = 'none';
+                                    }}
                                 />
-                                <span className="absolute top-2 left-2 bg-canvas/80 backdrop-blur-sm text-accent text-[10px] font-bold px-2 py-1 uppercase">
+                                <span className="bg-canvas/80 text-accent absolute top-2 left-2 px-2 py-1 text-[10px] font-bold uppercase backdrop-blur-sm">
                                     {item.category?.name || 'BERITA'}
                                 </span>
                             </div>
                             <Link href={`/news/${item.slug}`}>
-                                <h3 className="text-base font-semibold leading-snug text-ink group-hover:text-accent transition-colors line-clamp-2">
+                                <h3 className="text-ink group-hover:text-accent line-clamp-2 text-base leading-snug font-semibold transition-colors">
                                     {item.title}
                                 </h3>
                             </Link>
-                            <p className="text-xs text-ink-meta line-clamp-2 mt-2">{item.excerpt}</p>
+                            <p className="text-ink-meta mt-2 line-clamp-2 text-xs">
+                                {item.excerpt}
+                            </p>
                         </div>
-                        <div className="flex items-center justify-between text-xs text-ink-subtle mt-4 pt-3 border-t border-hairline">
+                        <div className="text-ink-subtle border-hairline mt-4 flex items-center justify-between border-t pt-3 text-xs">
                             <span>Oleh {item.author?.name || 'Redaksi'}</span>
-                            <span>{formatDate(item.published_at || item.created_at)}</span>
+                            <span>
+                                {formatDate(
+                                    item.published_at || item.created_at,
+                                )}
+                            </span>
                         </div>
                     </article>
                 ))}

@@ -8,7 +8,7 @@
 **Environment:** Docker (FrankenPHP + MariaDB)\
 **Local URL:** http://localhost:9006
 
-------------------------------------------------------------------------
+---
 
 # 1. Product Overview
 
@@ -24,7 +24,7 @@ Fitur utama: - Publikasi berita real-time - Manajemen konten editorial -
 Kategori berita - Multimedia content - SEO friendly architecture - User
 engagement - Dashboard administrator - Workflow redaksi profesional
 
-------------------------------------------------------------------------
+---
 
 # 2. Development Constraints
 
@@ -39,7 +39,7 @@ konfigurasi Docker existing
 Gunakan: - Container webserver: `frankenphp` - Container database:
 `mariadb` - URL existing: `http://localhost:9006`
 
-------------------------------------------------------------------------
+---
 
 # 3. Technology Stack
 
@@ -50,21 +50,21 @@ Frontend: - React - Inertia.js - TailwindCSS
 
 Infrastructure: - Docker existing environment
 
-------------------------------------------------------------------------
+---
 
 # 4. Design Requirement
 
 Sebelum implementasi kode wajib melakukan proses desain menggunakan:
 
--   Impeccable Design Skill
--   UI/UX Pro Max Skill
--   Frontend Design Skill
+- Impeccable Design Skill
+- UI/UX Pro Max Skill
+- Frontend Design Skill
 
 Target desain: - Premium editorial interface - Modern newsroom
 experience - Mobile-first - Visual hierarchy kuat - Setara media berita
 nasional
 
-------------------------------------------------------------------------
+---
 
 # 5. Target User
 
@@ -83,7 +83,7 @@ publikasi
 Kebutuhan: - User management - Role management - Website configuration -
 Analytics
 
-------------------------------------------------------------------------
+---
 
 # 6. Main Features
 
@@ -93,25 +93,25 @@ Komponen:
 
 ### Header
 
--   Logo
--   Navigation menu
--   Search
--   Admin access
+- Logo
+- Navigation menu
+- Search
+- Admin access
 
 ### Breaking News
 
--   Headline berjalan
--   Berita urgent
--   Timestamp
+- Headline berjalan
+- Berita urgent
+- Timestamp
 
 ### Hero News
 
--   Featured image
--   Title
--   Summary
--   Category
--   Author
--   Publish date
+- Featured image
+- Title
+- Summary
+- Category
+- Author
+- Publish date
 
 ### Latest News
 
@@ -131,6 +131,7 @@ Ranking: 1. Berita populer 2. Berita populer 3. Berita populer
 
 Kategori: - Nasional - Internasional - Politik - Ekonomi - Teknologi -
 Olahraga - Lifestyle - Entertainment - Kesehatan
+
 - Menampilkan grid berita berdasarkan kategori di halaman depan
 
 ### Advertisement Positions
@@ -140,7 +141,7 @@ Olahraga - Lifestyle - Entertainment - Kesehatan
 - **In-Article** (di dalam konten berita): 300x250
 - **Bottom Banner** (sebelum footer): 728x90
 
-------------------------------------------------------------------------
+---
 
 # 7. News Detail Page
 
@@ -151,7 +152,7 @@ URL:
 Content: - Category - Title - Subtitle - Author - Date - Reading time -
 Featured image - Article content - Related news - Share button - Tags
 
-------------------------------------------------------------------------
+---
 
 # 8. Category Page
 
@@ -162,7 +163,7 @@ URL:
 Fitur: - Category headline - Featured news - Article listing -
 Pagination
 
-------------------------------------------------------------------------
+---
 
 # 9. Search System
 
@@ -173,7 +174,7 @@ URL:
 Support: - Search title - Search content - Search category - Search
 author
 
-------------------------------------------------------------------------
+---
 
 # 10. Editorial Dashboard
 
@@ -193,7 +194,7 @@ Menu:
 
     Analytics
 
-------------------------------------------------------------------------
+---
 
 # 11. News Management
 
@@ -204,7 +205,7 @@ Status - Publish Date
 
 Status: - Draft - Review - Published - Archived
 
-------------------------------------------------------------------------
+---
 
 # 12. Database Requirement
 
@@ -252,7 +253,7 @@ Suggested tables:
     article_id
     tag_id
 
-------------------------------------------------------------------------
+---
 
 # 13. UI/UX Specification
 
@@ -280,7 +281,7 @@ Tablet: 768px
 
 Mobile: 375px
 
-------------------------------------------------------------------------
+---
 
 # 14. Performance Requirement
 
@@ -291,29 +292,29 @@ Lighthouse Performance 90+
 Optimization: - Lazy loading image - Optimized asset bundle - Inertia
 SSR - Query caching - Pagination
 
-------------------------------------------------------------------------
+---
 
 # 15. SEO Requirement
 
 Article wajib memiliki:
 
--   Meta title
--   Meta description
--   Open Graph metadata
--   NewsArticle JSON-LD schema
+- Meta title
+- Meta description
+- Open Graph metadata
+- NewsArticle JSON-LD schema
 
 SEO URL:
 
     /news/judul-berita
 
-------------------------------------------------------------------------
+---
 
 # 16. Security Requirement
 
 Implement: - CSRF protection - Authentication - Authorization - Input
 validation - XSS prevention - File upload validation
 
-------------------------------------------------------------------------
+---
 
 # 17. Component Architecture
 
@@ -331,7 +332,7 @@ React:
     SearchBox.jsx
     Pagination.jsx
 
-------------------------------------------------------------------------
+---
 
 # 18. Laravel Structure
 
@@ -364,7 +365,7 @@ React:
      Admin/
       Dashboard.jsx
 
-------------------------------------------------------------------------
+---
 
 # 19. Development Workflow
 
@@ -398,7 +399,7 @@ Optimization
 
 Testing: - Performance - SEO - Security - Responsive
 
-------------------------------------------------------------------------
+---
 
 # 20. Acceptance Criteria
 
@@ -414,15 +415,15 @@ existing digunakan - localhost:9006 berjalan
 Quality: - Tidak membuat environment baru - Tidak merusak konfigurasi
 existing - Production ready
 
-------------------------------------------------------------------------
+---
 
 # 21. Future Enhancement
 
--   Comment system
--   AI recommendation
--   Newsletter
--   Push notification
--   Mobile application API
--   Advertisement management
--   Subscription system
--   Analytics dashboard
+- Comment system
+- AI recommendation
+- Newsletter
+- Push notification
+- Mobile application API
+- Advertisement management
+- Subscription system
+- Analytics dashboard

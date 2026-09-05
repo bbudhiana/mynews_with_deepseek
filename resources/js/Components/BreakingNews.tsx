@@ -8,16 +8,16 @@ export default function BreakingNews({ items = [] }: BreakingProps) {
     if (!items || items.length === 0) return null;
 
     return (
-        <div className="bg-accent text-ink flex items-center px-4 py-2 text-sm overflow-hidden">
-            <span className="font-black tracking-wider uppercase text-xs flex-shrink-0 bg-black px-2 py-1 mr-4">
+        <div className="bg-accent text-ink flex items-center overflow-hidden px-4 py-2 text-sm">
+            <span className="mr-4 flex-shrink-0 bg-black px-2 py-1 text-xs font-black tracking-wider uppercase">
                 BREAKING NEWS
             </span>
-            <div className="flex gap-8 whitespace-nowrap overflow-x-auto scrollbar-none">
+            <div className="flex scrollbar-none gap-8 overflow-x-auto whitespace-nowrap">
                 {items.map((item) => (
                     <Link
                         key={item.id}
                         href={`/news/${item.slug}`}
-                        className="hover:underline flex items-center gap-2"
+                        className="flex items-center gap-2 hover:underline"
                     >
                         <span>•</span> {item.title}
                     </Link>
