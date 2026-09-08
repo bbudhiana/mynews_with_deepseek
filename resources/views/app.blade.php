@@ -14,7 +14,7 @@
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-K5PHY6KV1W');
+            gtag('config', 'G-K5PHY6KV1W', { cookie_flags: 'SameSite=None;Secure' });
         </script>
 
         <link rel="icon" href="/favicon.ico" sizes="any">
