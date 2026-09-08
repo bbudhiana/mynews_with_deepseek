@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Content;
+use App\Support\SeoMeta;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -30,7 +31,14 @@ class CategoryController extends Controller
             ->latest('published_at')
             ->paginate(12);
 
+        $seo = SeoMeta::forCategory($category);
+        $page = (int) request()->input('page', 1);
+        if ($page > 1) {
+            $seo->title = "Berita {$category->name} - Halaman {$page}";
+        }
+
         return Inertia::render('Category/Index', [
+            'seo' => $seo->toArray(),
             'category' => $category,
             'featured' => $featured,
             'articles' => $articles,

@@ -18,7 +18,7 @@ export default function Footer() {
                         href="/"
                         className="text-ink text-2xl font-bold tracking-tighter"
                     >
-                        <span className="text-accent">News</span> AI
+                        News<span className="text-accent"> AI</span>
                     </Link>
                     <p className="mt-4 text-sm leading-relaxed">
                         Pusat distribusi berita terpercaya, cepat, dan

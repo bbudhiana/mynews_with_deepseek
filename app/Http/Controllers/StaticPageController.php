@@ -178,8 +178,19 @@ class StaticPageController extends Controller
     {
         abort_unless(isset($this->pages[$page]), 404);
 
+        $data = $this->pages[$page];
+        $seoDescription = mb_substr(strip_tags($data['intro'] ?? ''), 0, 160);
+
         return Inertia::render('StaticPage', [
-            'page' => $this->pages[$page],
+            'seo' => [
+                'title' => "{$data['title']} - ".config('app.name'),
+                'description' => $seoDescription ?: "Halaman {$data['title']} ".config('app.name').'.',
+                'url' => url()->current(),
+                'type' => 'website',
+                'noindex' => true,
+                'siteName' => config('app.name'),
+            ],
+            'page' => $data,
             'navCategories' => Category::root()->orderBy('name')->get(['id', 'name', 'slug']),
         ]);
     }

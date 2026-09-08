@@ -28,6 +28,14 @@ class SearchController extends Controller
             ->withQueryString();
 
         return Inertia::render('Search/Index', [
+            'seo' => [
+                'title' => $query ? "Pencarian: \"{$query}\" - ".config('app.name') : config('app.name').' - Pencarian',
+                'description' => $query ? "Hasil pencarian untuk \"{$query}\" di ".config('app.name').'.' : 'Halaman pencarian.',
+                'url' => url()->current().($query ? '?q='.urlencode($query) : ''),
+                'type' => 'website',
+                'noindex' => true,
+                'siteName' => config('app.name'),
+            ],
             'query' => $query,
             'articles' => $articles,
             'navCategories' => Category::root()->orderBy('name')->get(['id', 'name', 'slug']),

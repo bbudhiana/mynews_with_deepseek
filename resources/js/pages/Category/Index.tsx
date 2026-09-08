@@ -2,9 +2,11 @@ import { Head, Link } from '@inertiajs/react';
 import Header from '@/Components/Header';
 import Footer from '@/Components/Footer';
 import AdBanner from '@/Components/AdBanner';
+import SeoHead from '@/Components/SeoHead';
 import { formatDate } from '@/lib/date';
 
 interface Props {
+    seo?: any;
     category: any;
     featured: any;
     articles: any;
@@ -12,15 +14,29 @@ interface Props {
 }
 
 export default function Index({
+    seo,
     category,
     featured,
     articles,
     navCategories,
 }: Props) {
     const categoryName = category?.name || 'Nasional';
+    const currentPage = articles?.current_page || 1;
+    const lastPage = articles?.last_page || 1;
+
     return (
         <>
-            <Head title={`Berita ${categoryName} Terkini - MyNews`} />
+            <SeoHead seo={seo} title={seo?.title} />
+            {currentPage > 1 && (
+                <Head>
+                    <link rel="prev" href={`/category/${category.slug}?page=${currentPage - 1}`} />
+                </Head>
+            )}
+            {currentPage < lastPage && (
+                <Head>
+                    <link rel="next" href={`/category/${category.slug}?page=${currentPage + 1}`} />
+                </Head>
+            )}
             <div className="bg-canvas text-ink min-h-screen">
                 <Header categories={navCategories} />
 

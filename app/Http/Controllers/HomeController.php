@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Content;
+use App\Support\SeoMeta;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -61,6 +62,7 @@ class HomeController extends Controller
             ->get();
 
         return Inertia::render('Home', [
+            'seo' => SeoMeta::forHome()->toArray(),
             'breakingNews' => $breakingNews,
             'heroNews' => $heroNews,
             'latestNews' => $latestNews,

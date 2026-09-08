@@ -1,72 +1,41 @@
-import { useEffect, useRef } from 'react';
-import { Head, Link } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 import Header from '@/Components/Header';
 import Footer from '@/Components/Footer';
 import AdBanner from '@/Components/AdBanner';
+import SeoHead from '@/Components/SeoHead';
 import { formatDate } from '@/lib/date';
 
 interface Props {
+    seo?: any;
+    jsonLd?: any[];
     article: any;
     relatedNews: any[];
     popularNews: any[];
     navCategories?: any[];
 }
 
-/* ponytail: ref + innerHTML via useEffect dodges React 19 scheduler crash
-   (Cannot read 'startTime' at reportAllChanges) when dangerouslySetInnerHTML
-   is set during render. Upgrade path: switch to a server-rendered HTML island
-   or a CMS-rendered fragment. */
-function splitHtmlAtMidpoint(html: string): { first: string; second: string } {
-    if (!html) return { first: '', second: '' };
-    const parts = html.split(/(?<=<\/p>)/i);
-    if (parts.length <= 1) {
-        const mid = Math.floor(html.length / 2);
-        return { first: html.slice(0, mid), second: html.slice(mid) };
-    }
-    const mid = Math.floor(parts.length / 2);
-    return {
-        first: parts.slice(0, mid).join(''),
-        second: parts.slice(mid).join(''),
-    };
-}
-
-function ArticleBody({ html }: { html: string }) {
-    const firstRef = useRef<HTMLDivElement>(null);
-    const secondRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        const { first, second } = splitHtmlAtMidpoint(html);
-        if (firstRef.current) firstRef.current.innerHTML = first;
-        if (secondRef.current) secondRef.current.innerHTML = second;
-    }, [html]);
-
-    return (
-        <>
-            <div
-                ref={firstRef}
-                className="article-body text-ink-body min-h-[40vh] max-w-[68ch] font-serif text-[18px] leading-[1.85] md:text-[19px]"
-            />
-            <div className="my-12 flex justify-center">
-                <AdBanner position="in-article" />
-            </div>
-            <div
-                ref={secondRef}
-                className="article-body text-ink-body min-h-[40vh] max-w-[68ch] font-serif text-[18px] leading-[1.85] md:text-[19px]"
-            />
-        </>
-    );
+function estimateReadTime(wordCount: number): string {
+    const minutes = Math.max(1, Math.ceil(wordCount / 200));
+    return `${minutes} menit baca`;
 }
 
 export default function Show({
+    seo,
+    jsonLd,
     article,
     relatedNews,
     popularNews,
     navCategories,
 }: Props) {
     if (!article) return null;
+
+    const readTime = article.body_word_count
+        ? estimateReadTime(article.body_word_count)
+        : estimateReadTime((article.body || '').split(/\s+/).length);
+
     return (
         <>
-            <Head title={`${article.title} - MyNews`} />
+            <SeoHead seo={seo} jsonLd={jsonLd} />
             <div className="bg-canvas text-ink min-h-screen">
                 <Header categories={navCategories} />
 
@@ -109,7 +78,7 @@ export default function Show({
                                     )}
                                 </span>
                                 <span className="flex items-center gap-1">
-                                    ⏱️ 3 menit baca
+                                    ⏱️ {readTime}
                                 </span>
                             </div>
 
@@ -128,7 +97,16 @@ export default function Show({
                                     )}
                                     <div className="flex-1">
                                         <div className="text-sm font-bold">
-                                            {article.author.name}
+                                            {article.author_url ? (
+                                                <Link
+                                                    href={article.author_url}
+                                                    className="hover:text-accent transition-colors"
+                                                >
+                                                    {article.author.name}
+                                                </Link>
+                                            ) : (
+                                                article.author.name
+                                            )}
                                         </div>
                                         <div className="text-accent mb-2 text-xs">
                                             {article.author.job_title ||
@@ -166,9 +144,21 @@ export default function Show({
                                 </figcaption>
                             </figure>
 
-                            {/* Article Body — split at midpoint with in-article ad injected between */}
-                            <ArticleBody
-                                html={article.body || article.excerpt || ''}
+                            {/* Article Body — server-side pre-split for ad injection */}
+                            <div
+                                className="article-body text-ink-body max-w-[68ch] font-serif text-[18px] leading-[1.85] md:text-[19px]"
+                                dangerouslySetInnerHTML={{
+                                    __html: article.body_first || '',
+                                }}
+                            />
+                            <div className="my-12 flex justify-center">
+                                <AdBanner position="in-article" />
+                            </div>
+                            <div
+                                className="article-body text-ink-body max-w-[68ch] font-serif text-[18px] leading-[1.85] md:text-[19px]"
+                                dangerouslySetInnerHTML={{
+                                    __html: article.body_second || '',
+                                }}
                             />
 
                             {/* Tags */}
@@ -178,20 +168,22 @@ export default function Show({
                                         TAGS:
                                     </span>
                                     <div className="flex flex-wrap gap-2">
-                                        {[
-                                            'Nasional',
-                                            'Terkini',
-                                            'Pemerintah',
-                                            'Sorotan',
-                                        ].map((tag) => (
-                                            <Link
-                                                key={tag}
-                                                href={`/search?q=${tag.toLowerCase()}`}
-                                                className="bg-elevated rounded-full px-3 py-1.5 text-xs transition-colors hover:bg-[#334155]"
-                                            >
-                                                #{tag}
-                                            </Link>
-                                        ))}
+                                        {article.tags &&
+                                        article.tags.length > 0 ? (
+                                            article.tags.map((tag: any) => (
+                                                <Link
+                                                    key={tag.id}
+                                                    href={`/search?q=${encodeURIComponent(tag.name)}`}
+                                                    className="bg-elevated rounded-full px-3 py-1.5 text-xs transition-colors hover:bg-[#334155]"
+                                                >
+                                                    #{tag.name}
+                                                </Link>
+                                            ))
+                                        ) : (
+                                            <span className="text-ink-subtle text-xs italic">
+                                                Belum ada tag
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
                             </div>

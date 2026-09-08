@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -57,5 +58,13 @@ class Content extends Model
     public function thumbnail()
     {
         return $this->belongsTo(Media::class, 'thumbnail_id');
+    }
+
+    /**
+     * @return BelongsToMany<Tag, $this>
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'content_tags', 'content_id', 'tag_id');
     }
 }

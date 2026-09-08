@@ -2,6 +2,7 @@ import { Head } from '@inertiajs/react';
 import Header from '@/Components/Header';
 import Footer from '@/Components/Footer';
 import AdBanner from '@/Components/AdBanner';
+import SeoHead from '@/Components/SeoHead';
 import { formatDate } from '@/lib/date';
 
 interface Section {
@@ -19,14 +20,15 @@ interface StaticPageData {
 }
 
 interface Props {
+    seo?: any;
     page: StaticPageData;
     navCategories?: any[];
 }
 
-export default function StaticPage({ page, navCategories }: Props) {
+export default function StaticPage({ seo, page, navCategories }: Props) {
     return (
         <>
-            <Head title={`${page.title} - MyNews`} />
+            <SeoHead seo={seo} title={seo?.title} />
             <div className="bg-canvas text-ink min-h-screen">
                 <Header categories={navCategories} />
 

@@ -5,9 +5,11 @@ import BreakingNews from '@/Components/BreakingNews';
 import AdBanner from '@/Components/AdBanner';
 import EditorsChoice from '@/Components/EditorsChoice';
 import CategoryNews from '@/Components/CategoryNews';
+import SeoHead from '@/Components/SeoHead';
 import { formatDate, formatDateShort } from '@/lib/date';
 
 interface Props {
+    seo?: any;
     breakingNews: any[];
     heroNews: any;
     latestNews: any[];
@@ -18,6 +20,7 @@ interface Props {
 }
 
 export default function Home({
+    seo,
     breakingNews,
     heroNews,
     latestNews,
@@ -28,7 +31,7 @@ export default function Home({
 }: Props) {
     return (
         <>
-            <Head title="MyNews - Berita Terkini Indonesia" />
+            <SeoHead seo={seo} title={seo?.title} />
             <div className="bg-canvas text-ink min-h-screen">
                 <Header categories={navCategories} />
 

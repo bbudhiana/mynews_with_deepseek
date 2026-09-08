@@ -2,21 +2,28 @@ import { Head, Link } from '@inertiajs/react';
 import Header from '@/Components/Header';
 import Footer from '@/Components/Footer';
 import AdBanner from '@/Components/AdBanner';
+import SeoHead from '@/Components/SeoHead';
 import { formatDate } from '@/lib/date';
 
 interface Props {
+    seo?: any;
     query?: string;
     articles?: any;
     navCategories?: any[];
 }
 
-export default function Index({ query = '', articles, navCategories }: Props) {
+export default function Index({
+    seo,
+    query = '',
+    articles,
+    navCategories,
+}: Props) {
     const articleList = articles?.data || [];
     const totalArticles = articles?.total || 0;
 
     return (
         <>
-            <Head title={`Hasil Pencarian: "${query}" - MyNews`} />
+            <SeoHead seo={seo} title={seo?.title} />
             <div className="bg-canvas text-ink min-h-screen">
                 <Header categories={navCategories} />
 

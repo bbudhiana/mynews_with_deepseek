@@ -1,2 +1,8 @@
 User-agent: *
-Disallow:
+Allow: /
+
+Disallow: /search
+Disallow: /api/
+
+Sitemap: /sitemap.xml
+Sitemap: /sitemap-news.xml

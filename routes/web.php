@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\StaticPageController;
 use Illuminate\Support\Facades\Route;
 
@@ -11,6 +13,11 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.show');
 Route::get('/category/{slug}', [CategoryController::class, 'index'])->name('category.index');
 Route::get('/search', [SearchController::class, 'index'])->name('search');
+Route::get('/author/{slug}', [AuthorController::class, 'show'])->name('author.show');
+
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
+Route::get('/sitemap-news.xml', [SitemapController::class, 'news'])->name('sitemap.news');
+Route::get('/feed.xml', [SitemapController::class, 'feed'])->name('feed');
 
 Route::get('/pedoman-media', [StaticPageController::class, 'show'])
     ->defaults('page', 'pedoman-media')->name('page.pedoman-media');
