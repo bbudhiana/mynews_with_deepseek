@@ -54,9 +54,9 @@ class HomeController extends Controller
 
         $editorsChoice = Content::with(['category', 'author', 'featuredImage', 'thumbnail'])
             ->where('status', 'published')
+            ->where('editor_pick_flag', true)
             ->whereNotNull('featured_image_id')
             ->latest('published_at')
-            ->skip(1)
             ->take(3)
             ->get();
 
