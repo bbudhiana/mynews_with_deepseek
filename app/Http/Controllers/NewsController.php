@@ -36,7 +36,7 @@ class NewsController extends Controller
 
         $seo = SeoMeta::forArticle($article);
         $seoArr = $seo->toArray();
-        $seoArr['tags'] = $article->tags?->pluck('name')->all() ?? [];
+        $seoArr['tags'] = $article->tags->pluck('name')->all();
 
         $article->body_first = $this->splitBody($article->body ?? '', true);
         $article->body_second = $this->splitBody($article->body ?? '', false);
@@ -87,7 +87,10 @@ class NewsController extends Controller
         return str_word_count($text);
     }
 
-    private function breadcrumbJsonLd($article): array
+    /**
+     * @return array<string, mixed>
+     */
+    private function breadcrumbJsonLd(Content $article): array
     {
         $categoryUrl = $article->category
             ? route('category.index', ['slug' => $article->category->slug], true)
@@ -98,7 +101,7 @@ class NewsController extends Controller
             '@type' => 'BreadcrumbList',
             'itemListElement' => [
                 ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => url('/')],
-                ['@type' => 'ListItem', 'position' => 2, 'name' => $article->category?->name ?? 'Berita', 'item' => $categoryUrl],
+                ['@type' => 'ListItem', 'position' => 2, 'name' => $article->category->name ?? 'Berita', 'item' => $categoryUrl],
                 ['@type' => 'ListItem', 'position' => 3, 'name' => $article->title, 'item' => url()->current()],
             ],
         ];

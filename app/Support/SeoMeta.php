@@ -2,10 +2,15 @@
 
 namespace App\Support;
 
+use App\Models\Category;
+use App\Models\Content;
 use Illuminate\Support\Str;
 
 class SeoMeta
 {
+    /**
+     * @param  array<string, mixed>|null  $tags
+     */
     public function __construct(
         public string $title,
         public string $description,
@@ -21,7 +26,7 @@ class SeoMeta
         public bool $noindex = false,
     ) {}
 
-    public static function forArticle($article, ?string $siteName = null): self
+    public static function forArticle(Content $article, ?string $siteName = null): self
     {
         $site = $siteName ?: (string) config('app.name', 'MyNews');
         $description = $article->excerpt ?: $article->sub_title ?: Str::limit(strip_tags($article->body ?? ''), 160, '');
@@ -42,7 +47,7 @@ class SeoMeta
         );
     }
 
-    public static function forCategory($category, ?string $siteName = null): self
+    public static function forCategory(Category $category, ?string $siteName = null): self
     {
         $site = $siteName ?: (string) config('app.name', 'MyNews');
         $url = route('category.index', ['slug' => $category->slug], true);
@@ -70,6 +75,9 @@ class SeoMeta
         );
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         return [
@@ -88,6 +96,9 @@ class SeoMeta
         ];
     }
 
+    /**
+     * @return array<string, mixed>|null
+     */
     public function toJsonLd(): ?array
     {
         if ($this->type !== 'article') {

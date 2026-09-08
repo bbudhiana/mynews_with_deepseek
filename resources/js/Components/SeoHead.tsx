@@ -16,16 +16,19 @@ interface SeoProps {
         noindex?: boolean;
     };
     title?: string;
-    jsonLd?: any | any[];
+    jsonLd?: unknown[];
 }
 
 export default function SeoHead({ seo, title, jsonLd }: SeoProps) {
     const finalTitle = title || seo?.title || 'MyNews';
     const description = seo?.description || 'Portal berita terkini Indonesia.';
-    const url = seo?.url || (typeof window !== 'undefined' ? window.location.href : '');
+    const url =
+        seo?.url || (typeof window !== 'undefined' ? window.location.href : '');
     const image = seo?.image || null;
     const type = seo?.type || 'website';
-    const robots = seo?.noindex ? 'noindex,follow' : 'index,follow,max-image-preview:large,max-snippet:-1';
+    const robots = seo?.noindex
+        ? 'noindex,follow'
+        : 'index,follow,max-image-preview:large,max-snippet:-1';
 
     const jsonLdArray = jsonLd
         ? Array.isArray(jsonLd)

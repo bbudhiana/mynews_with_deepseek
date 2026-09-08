@@ -1,4 +1,3 @@
-import { Head } from '@inertiajs/react';
 import Header from '@/Components/Header';
 import Footer from '@/Components/Footer';
 import AdBanner from '@/Components/AdBanner';

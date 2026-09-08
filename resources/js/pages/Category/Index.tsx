@@ -29,12 +29,18 @@ export default function Index({
             <SeoHead seo={seo} title={seo?.title} />
             {currentPage > 1 && (
                 <Head>
-                    <link rel="prev" href={`/category/${category.slug}?page=${currentPage - 1}`} />
+                    <link
+                        rel="prev"
+                        href={`/category/${category.slug}?page=${currentPage - 1}`}
+                    />
                 </Head>
             )}
             {currentPage < lastPage && (
                 <Head>
-                    <link rel="next" href={`/category/${category.slug}?page=${currentPage + 1}`} />
+                    <link
+                        rel="next"
+                        href={`/category/${category.slug}?page=${currentPage + 1}`}
+                    />
                 </Head>
             )}
             <div className="bg-canvas text-ink min-h-screen">

@@ -73,7 +73,8 @@ export default function Show({ seo, author, articles, navCategories }: Props) {
                                                 className="bg-card mb-3 h-44 w-full rounded-xl object-cover"
                                             />
                                             <span className="text-accent text-xs font-bold tracking-wider uppercase">
-                                                {item.category?.name || 'BERITA'}
+                                                {item.category?.name ||
+                                                    'BERITA'}
                                             </span>
                                             <h2 className="group-hover:text-accent mt-1 line-clamp-2 text-lg leading-snug font-bold transition-colors">
                                                 {item.title}

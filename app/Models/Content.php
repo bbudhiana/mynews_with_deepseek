@@ -17,6 +17,12 @@ use Illuminate\Support\Carbon;
  * @property int|null $thumbnail_id
  * @property string $status
  * @property Carbon|null $published_at
+ * @property string $body_first
+ * @property string $body_second
+ * @property int $body_word_count
+ * @property string|null $author_url
+ * @property-read Media|null $featured_image
+ * @property-read Media|null $thumbnail
  */
 class Content extends Model
 {

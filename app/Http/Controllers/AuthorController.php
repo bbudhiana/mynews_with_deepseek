@@ -18,7 +18,7 @@ class AuthorController extends Controller
             ? User::find((int) $slug)
             : User::all()->first(fn ($u) => Str::slug($u->name) === $slug);
 
-        abort_unless($author, 404);
+        abort_if($author === null, 404);
 
         $articles = Content::with(['category', 'featuredImage', 'thumbnail'])
             ->where('author_id', $author->id)

@@ -117,6 +117,9 @@ class WarmSeoFiles extends Command
         }
     }
 
+    /**
+     * @param  array<int, array<string, mixed>>  $urls
+     */
     private function renderSitemap(array $urls): string
     {
         $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
@@ -140,6 +143,9 @@ class WarmSeoFiles extends Command
         return $xml;
     }
 
+    /**
+     * @param  array<int, array<string, mixed>>  $items
+     */
     private function renderNewsSitemap(array $items, string $siteName): string
     {
         $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
@@ -169,6 +175,9 @@ class WarmSeoFiles extends Command
         return $xml;
     }
 
+    /**
+     * @param  array<int, array<string, mixed>>  $items
+     */
     private function renderFeed(array $items, string $siteName, string $siteUrl, string $updated): string
     {
         $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
