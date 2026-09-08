@@ -7,8 +7,12 @@ interface NavCategory {
 }
 
 export default function Footer() {
-    const { props } = usePage<{ navCategories?: NavCategory[] }>();
+    const { props } = usePage<{
+        navCategories?: NavCategory[];
+        name?: string;
+    }>();
     const categories = props.navCategories ?? [];
+    const brand = props.name ?? 'MyNews';
 
     return (
         <footer className="border-hairline text-ink-meta border-t bg-[#070C16] py-12">
@@ -18,7 +22,7 @@ export default function Footer() {
                         href="/"
                         className="text-ink text-2xl font-bold tracking-tighter"
                     >
-                        News<span className="text-accent"> AI</span>
+                        {brand}
                     </Link>
                     <p className="mt-4 text-sm leading-relaxed">
                         Pusat distribusi berita terpercaya, cepat, dan
@@ -112,8 +116,8 @@ export default function Footer() {
                 </div>
             </div>
             <div className="border-hairline text-ink-subtle mx-auto mt-8 max-w-7xl border-t px-4 pt-8 text-center text-xs">
-                &copy; {new Date().getFullYear()} NewsAI Portal. Hak cipta
-                dilindungi undang-undang.
+                &copy; {new Date().getFullYear()} {brand}. Hak cipta dilindungi
+                undang-undang.
             </div>
         </footer>
     );

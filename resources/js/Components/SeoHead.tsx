@@ -14,13 +14,25 @@ interface SeoProps {
         tags?: string[] | null;
         siteName?: string | null;
         noindex?: boolean;
+        publisherLogo?: string | null;
+        publisherUrl?: string | null;
+        sameAs?: string[] | null;
+        searchUrl?: string | null;
     };
     title?: string;
     jsonLd?: unknown[];
+    organizationJsonLd?: unknown;
+    websiteJsonLd?: unknown;
 }
 
-export default function SeoHead({ seo, title, jsonLd }: SeoProps) {
-    const finalTitle = title || seo?.title || 'MyNews';
+export default function SeoHead({
+    seo,
+    title,
+    jsonLd,
+    organizationJsonLd,
+    websiteJsonLd,
+}: SeoProps) {
+    const finalTitle = title || seo?.title;
     const description = seo?.description || 'Portal berita terkini Indonesia.';
     const url =
         seo?.url || (typeof window !== 'undefined' ? window.location.href : '');
@@ -36,6 +48,14 @@ export default function SeoHead({ seo, title, jsonLd }: SeoProps) {
             : [jsonLd]
         : [];
 
+    if (organizationJsonLd) {
+        jsonLdArray.push(organizationJsonLd);
+    }
+
+    if (websiteJsonLd) {
+        jsonLdArray.push(websiteJsonLd);
+    }
+
     return (
         <Head>
             <title>{finalTitle}</title>
@@ -43,11 +63,20 @@ export default function SeoHead({ seo, title, jsonLd }: SeoProps) {
             <meta name="robots" content={robots} />
             <link rel="canonical" href={url} />
 
+            {image && (
+                <link
+                    rel="preload"
+                    as="image"
+                    href={image}
+                    fetchPriority="high"
+                />
+            )}
+
             <meta property="og:title" content={finalTitle} />
             <meta property="og:description" content={description} />
             <meta property="og:url" content={url} />
             <meta property="og:type" content={type} />
-            <meta property="og:site_name" content={seo?.siteName || 'MyNews'} />
+            <meta property="og:site_name" content={seo?.siteName ?? ''} />
             <meta property="og:locale" content="id_ID" />
 
             <meta name="twitter:card" content="summary_large_image" />

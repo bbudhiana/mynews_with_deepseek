@@ -23,6 +23,8 @@ use Illuminate\Support\Carbon;
  * @property string|null $author_url
  * @property-read Media|null $featured_image
  * @property-read Media|null $thumbnail
+ * @property-read string|null $featured_image_srcset
+ * @property-read string|null $thumbnail_srcset
  */
 class Content extends Model
 {

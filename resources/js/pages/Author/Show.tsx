@@ -31,6 +31,8 @@ export default function Show({ seo, author, articles, navCategories }: Props) {
                             <img
                                 src={`/storage/${author.profile_photo_path}`}
                                 alt={author.name}
+                                width={96}
+                                height={96}
                                 className="h-24 w-24 flex-shrink-0 rounded-full object-cover"
                             />
                         ) : (
@@ -68,7 +70,14 @@ export default function Show({ seo, author, articles, navCategories }: Props) {
                                                     item.thumbnail?.url ||
                                                     ''
                                                 }
+                                                srcSet={
+                                                    item.featured_image
+                                                        ?.srcset || undefined
+                                                }
+                                                sizes="(min-width: 768px) 50vw, 100vw"
                                                 alt={item.title}
+                                                width={640}
+                                                height={360}
                                                 loading="lazy"
                                                 className="bg-card mb-3 h-44 w-full rounded-xl object-cover"
                                             />

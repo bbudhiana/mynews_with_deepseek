@@ -6,7 +6,8 @@ import AdBanner from '@/Components/AdBanner';
 import EditorsChoice from '@/Components/EditorsChoice';
 import CategoryNews from '@/Components/CategoryNews';
 import SeoHead from '@/Components/SeoHead';
-import { formatDate, formatDateShort } from '@/lib/date';
+import { formatDate } from '@/lib/date';
+import DateTime from '@/Components/DateTime';
 
 interface Props {
     seo?: any;
@@ -63,7 +64,14 @@ export default function Home({
                                                     heroNews.thumbnail?.url ||
                                                     ''
                                                 }
+                                                srcSet={
+                                                    heroNews.featured_image
+                                                        ?.srcset || undefined
+                                                }
+                                                sizes="100vw"
                                                 alt={heroNews.title}
+                                                width={1200}
+                                                height={630}
                                                 fetchPriority="high"
                                                 className="bg-card h-[420px] w-full object-cover transition-transform duration-500 group-hover:scale-[1.02] md:h-[480px]"
                                                 onError={(e) => {
@@ -128,10 +136,13 @@ export default function Home({
                                                     </div>
                                                     <span>•</span>
                                                     <span>
-                                                        {formatDateShort(
-                                                            heroNews.published_at ||
-                                                                heroNews.created_at,
-                                                        )}
+                                                        <DateTime
+                                                            format="short"
+                                                            date={
+                                                                heroNews.published_at ||
+                                                                heroNews.created_at
+                                                            }
+                                                        />
                                                     </span>
                                                 </div>
                                             </div>
@@ -173,7 +184,16 @@ export default function Home({
                                                                     ?.url ||
                                                                 ''
                                                             }
+                                                            srcSet={
+                                                                news
+                                                                    .featured_image
+                                                                    ?.srcset ||
+                                                                undefined
+                                                            }
+                                                            sizes="(min-width: 768px) 33vw, 100vw"
                                                             alt={news.title}
+                                                            width={640}
+                                                            height={360}
                                                             loading="lazy"
                                                             decoding="async"
                                                             className="bg-card h-48 w-full object-cover"

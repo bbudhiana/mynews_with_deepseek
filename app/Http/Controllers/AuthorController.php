@@ -33,10 +33,17 @@ class AuthorController extends Controller
             type: 'profile',
             authorName: $author->name,
             siteName: config('app.name'),
+            image: $author->profile_photo_path ? asset('storage/'.$author->profile_photo_path) : null,
         );
 
         return Inertia::render('Author/Show', [
             'seo' => $seo->toArray(),
+            'jsonLd' => [
+                $seo->personJsonLd(
+                    jobTitle: $author->job_title ?? 'Wartawan',
+                    worksFor: (string) config('app.name'),
+                ),
+            ],
             'author' => $author,
             'articles' => $articles,
             'navCategories' => Category::root()->orderBy('name')->get(['id', 'name', 'slug']),

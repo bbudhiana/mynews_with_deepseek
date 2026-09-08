@@ -51,7 +51,13 @@ export default function EditorsChoice({ items = [] }: Props) {
                                         item.thumbnail?.url ||
                                         ''
                                     }
+                                    srcSet={
+                                        item.featured_image?.srcset || undefined
+                                    }
+                                    sizes="(min-width: 768px) 33vw, 100vw"
                                     alt={item.title}
+                                    width={480}
+                                    height={270}
                                     loading="lazy"
                                     decoding="async"
                                     className="bg-card h-40 w-full object-cover transition-transform duration-300 group-hover:scale-105"

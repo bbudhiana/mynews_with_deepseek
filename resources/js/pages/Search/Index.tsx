@@ -62,7 +62,14 @@ export default function Index({
                                                 item.thumbnail?.url ||
                                                 ''
                                             }
+                                            srcSet={
+                                                item.featured_image?.srcset ||
+                                                undefined
+                                            }
+                                            sizes="(min-width: 768px) 224px, 100vw"
                                             alt={item.title}
+                                            width={320}
+                                            height={180}
                                             loading="lazy"
                                             decoding="async"
                                             className="bg-card h-36 w-full rounded-xl object-cover md:w-56"

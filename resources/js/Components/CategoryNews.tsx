@@ -51,7 +51,13 @@ export default function CategoryNews({ data, title }: CategoryNewsProps) {
                                     article.thumbnail?.url ||
                                     ''
                                 }
+                                srcSet={
+                                    article.featured_image?.srcset || undefined
+                                }
+                                sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                                 alt={article.title}
+                                width={640}
+                                height={360}
                                 loading="lazy"
                                 decoding="async"
                                 className="bg-card h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105"

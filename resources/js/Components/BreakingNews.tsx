@@ -7,8 +7,25 @@ interface BreakingProps {
 export default function BreakingNews({ items = [] }: BreakingProps) {
     if (!items || items.length === 0) return null;
 
+    const ld = {
+        '@context': 'https://schema.org',
+        '@type': 'ItemList',
+        itemListElement: items.map((item, idx) => ({
+            '@type': 'ListItem',
+            position: idx + 1,
+            name: item.title,
+            url:
+                typeof window !== 'undefined'
+                    ? `${window.location.origin}/news/${item.slug}`
+                    : `/news/${item.slug}`,
+        })),
+    };
+
     return (
-        <div className="bg-accent text-ink flex items-center overflow-hidden px-4 py-2 text-sm">
+        <nav
+            className="bg-accent text-ink flex items-center overflow-hidden px-4 py-2 text-sm"
+            aria-label="Breaking news"
+        >
             <span className="mr-4 flex-shrink-0 bg-black px-2 py-1 text-xs font-black tracking-wider uppercase">
                 BREAKING NEWS
             </span>
@@ -23,6 +40,10 @@ export default function BreakingNews({ items = [] }: BreakingProps) {
                     </Link>
                 ))}
             </div>
-        </div>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }}
+            />
+        </nav>
     );
 }

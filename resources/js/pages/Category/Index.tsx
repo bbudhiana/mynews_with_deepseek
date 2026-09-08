@@ -82,7 +82,14 @@ export default function Index({
                                                 featured.thumbnail?.url ||
                                                 ''
                                             }
+                                            srcSet={
+                                                featured.featured_image
+                                                    ?.srcset || undefined
+                                            }
+                                            sizes="(min-width: 1024px) 66vw, 100vw"
                                             alt={featured.title}
+                                            width={1200}
+                                            height={630}
                                             fetchPriority="high"
                                             className="bg-card h-80 w-full object-cover transition-transform duration-300 group-hover:scale-105"
                                             onError={(e) => {
@@ -131,7 +138,15 @@ export default function Index({
                                                                 ?.url ||
                                                             ''
                                                         }
+                                                        srcSet={
+                                                            item.featured_image
+                                                                ?.srcset ||
+                                                            undefined
+                                                        }
+                                                        sizes="(min-width: 768px) 50vw, 100vw"
                                                         alt={item.title}
+                                                        width={640}
+                                                        height={360}
                                                         loading="lazy"
                                                         decoding="async"
                                                         className="bg-card h-44 w-full object-cover transition-transform duration-300 group-hover:scale-105"

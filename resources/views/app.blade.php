@@ -20,6 +20,9 @@
         <link rel="icon" href="/favicon.ico" sizes="any">
         <link rel="icon" href="/favicon.svg" type="image/svg+xml">
         <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="{{ config('app.name', 'MyNews') }} Search">
+        <meta name="mobile-web-app-capable" content="yes">
 
         <link rel="alternate" type="application/rss+xml" title="{{ config('app.name', 'MyNews') }} RSS" href="/feed.xml">
         <link rel="sitemap" type="application/xml" href="/sitemap.xml">

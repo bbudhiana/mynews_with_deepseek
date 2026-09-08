@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
+use Inertia\Inertia;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,12 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->configureDefaults();
         Content::observe(ContentObserver::class);
+        $this->shareSiteName();
+    }
+
+    private function shareSiteName(): void
+    {
+        Inertia::share('name', config('app.name'));
     }
 
     /**

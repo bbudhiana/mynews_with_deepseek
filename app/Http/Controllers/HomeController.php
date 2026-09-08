@@ -13,6 +13,7 @@ class HomeController extends Controller
     public function index(): Response
     {
         $breakingNews = Content::where('status', 'published')
+            ->where('breaking_news_flag', true)
             ->latest('published_at')
             ->take(5)
             ->get(['id', 'title', 'slug', 'published_at']);
@@ -61,8 +62,21 @@ class HomeController extends Controller
             ->take(3)
             ->get();
 
+        $heroImage = $heroNews?->featured_image?->url ?: $heroNews?->thumbnail?->url ?: null;
+        $socialProfiles = [
+            'https://www.facebook.com/mynews.id',
+            'https://twitter.com/mynews_id',
+            'https://www.instagram.com/mynews.id',
+            'https://www.youtube.com/@mynews.id',
+        ];
+        $seo = SeoMeta::forHome(heroImage: $heroImage, sameAs: $socialProfiles);
+        $seo->publisherLogo = url('/publisher-logo.svg');
+        $seo->publisherUrl = url('/');
+
         return Inertia::render('Home', [
-            'seo' => SeoMeta::forHome()->toArray(),
+            'seo' => $seo->toArray(),
+            'organizationJsonLd' => $seo->organizationJsonLd(),
+            'websiteJsonLd' => $seo->websiteJsonLd(),
             'breakingNews' => $breakingNews,
             'heroNews' => $heroNews,
             'latestNews' => $latestNews,

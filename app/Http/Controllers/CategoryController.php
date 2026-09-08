@@ -31,10 +31,11 @@ class CategoryController extends Controller
             ->latest('published_at')
             ->paginate(12);
 
-        $seo = SeoMeta::forCategory($category);
+        $seo = SeoMeta::forCategory($category, description: $category->meta_description);
         $page = (int) request()->input('page', 1);
         if ($page > 1) {
             $seo->title = "Berita {$category->name} - Halaman {$page}";
+            $seo->noindex = true;
         }
 
         return Inertia::render('Category/Index', [

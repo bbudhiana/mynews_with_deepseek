@@ -1,4 +1,4 @@
-import { Link, router } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 
 interface NavCategory {
@@ -9,10 +9,13 @@ interface NavCategory {
 
 interface Props {
     categories?: NavCategory[];
+    siteName?: string;
 }
 
-export default function Header({ categories = [] }: Props) {
+export default function Header({ categories = [], siteName }: Props) {
     const [searchQuery, setSearchQuery] = useState('');
+    const { props } = usePage<{ name?: string }>();
+    const brand = siteName ?? props.name ?? 'MyNews';
     const [mobileOpen, setMobileOpen] = useState(false);
 
     const handleSearch = (e: React.FormEvent) => {
@@ -31,7 +34,7 @@ export default function Header({ categories = [] }: Props) {
                             href="/"
                             className="text-ink text-2xl font-bold tracking-tighter"
                         >
-                            News<span className="text-accent"> AI</span>
+                            {brand}
                         </Link>
                         {categories.length > 0 && (
                             <nav className="hidden items-center gap-6 text-sm font-medium md:flex">

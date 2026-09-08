@@ -3,6 +3,7 @@ import Header from '@/Components/Header';
 import Footer from '@/Components/Footer';
 import AdBanner from '@/Components/AdBanner';
 import SeoHead from '@/Components/SeoHead';
+import DateTime from '@/Components/DateTime';
 import { formatDate } from '@/lib/date';
 
 interface Props {
@@ -71,12 +72,12 @@ export default function Show({
                             </h1>
 
                             <div className="border-hairline text-ink-meta mb-8 flex flex-wrap items-center justify-end gap-4 border-y py-4 text-sm">
-                                <span>
-                                    {formatDate(
+                                <DateTime
+                                    date={
                                         article.published_at ||
-                                            article.created_at,
-                                    )}
-                                </span>
+                                        article.created_at
+                                    }
+                                />
                                 <span className="flex items-center gap-1">
                                     ⏱️ {readTime}
                                 </span>
@@ -129,7 +130,14 @@ export default function Show({
                                         article.thumbnail?.url ||
                                         ''
                                     }
+                                    srcSet={
+                                        article.featured_image?.srcset ||
+                                        undefined
+                                    }
+                                    sizes="(min-width: 1024px) 66vw, 100vw"
                                     alt={article.title}
+                                    width={1200}
+                                    height={630}
                                     fetchPriority="high"
                                     className="bg-card h-auto w-full rounded-2xl"
                                     onError={(e) => {
@@ -287,6 +295,8 @@ export default function Show({
                                                             ''
                                                         }
                                                         alt={item.title}
+                                                        width={160}
+                                                        height={120}
                                                         loading="lazy"
                                                         decoding="async"
                                                         className="bg-card h-16 w-20 flex-shrink-0 rounded-lg object-cover"

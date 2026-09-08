@@ -18,6 +18,11 @@ Route::get('/author/{slug}', [AuthorController::class, 'show'])->name('author.sh
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 Route::get('/sitemap-news.xml', [SitemapController::class, 'news'])->name('sitemap.news');
 Route::get('/feed.xml', [SitemapController::class, 'feed'])->name('feed');
+Route::get('/opensearch.xml', function () {
+    return response()
+        ->view('opensearch')
+        ->header('Content-Type', 'application/xml; charset=utf-8');
+})->name('opensearch');
 
 Route::get('/pedoman-media', [StaticPageController::class, 'show'])
     ->defaults('page', 'pedoman-media')->name('page.pedoman-media');
