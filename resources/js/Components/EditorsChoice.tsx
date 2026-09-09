@@ -1,21 +1,9 @@
 import { Link } from '@inertiajs/react';
 import { formatDateShort } from '@/lib/date';
-
-interface ArticleItem {
-    id: number;
-    title: string;
-    category: any;
-    author: any;
-    slug: string;
-    published_at: string;
-    created_at: string;
-    featured_image: any;
-    thumbnail: any;
-    excerpt: string;
-}
+import type { ArticleListItem } from '@/types';
 
 interface Props {
-    items?: ArticleItem[];
+    items?: ArticleListItem[];
 }
 
 export default function EditorsChoice({ items = [] }: Props) {

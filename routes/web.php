@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.show');
+Route::get('/preview/news/{slug}', [NewsController::class, 'preview'])
+    ->middleware('signed')
+    ->name('news.preview');
 Route::get('/category/{slug}', [CategoryController::class, 'index'])->name('category.index');
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 Route::get('/author/{slug}', [AuthorController::class, 'show'])->name('author.show');

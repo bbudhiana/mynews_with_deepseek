@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Content;
 use App\Support\SeoMeta;
-use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -15,7 +13,7 @@ class NewsController extends Controller
     {
         $article = Content::with(['category', 'author', 'featuredImage', 'thumbnail', 'tags'])
             ->where('slug', $slug)
-            ->whereIn('status', ['published', 'draft'])
+            ->where('status', 'published')
             ->firstOrFail();
 
         $related = Content::with(['featuredImage', 'thumbnail'])
@@ -27,10 +25,8 @@ class NewsController extends Controller
             ->take(3)
             ->get();
 
-        $popular = Content::with(['featuredImage', 'thumbnail'])
-            ->where('status', 'published')
-            ->whereNotNull('featured_image_id')
-            ->orderBy('id', 'desc')
+        $popular = Content::popular()
+            ->with(['featuredImage', 'thumbnail'])
             ->take(5)
             ->get();
 
@@ -42,7 +38,7 @@ class NewsController extends Controller
         $article->body_second = $this->splitBody($article->body ?? '', false);
         $article->body_word_count = $this->wordCount(strip_tags($article->body ?? ''));
         $article->author_url = $article->author
-            ? route('author.show', ['slug' => Str::slug($article->author->name) ?: $article->author->id], true)
+            ? route('author.show', ['slug' => $article->author->slug], true)
             : null;
 
         return Inertia::render('News/Show', [
@@ -54,7 +50,30 @@ class NewsController extends Controller
             'article' => $article,
             'relatedNews' => $related,
             'popularNews' => $popular,
-            'navCategories' => Category::root()->orderBy('name')->get(['id', 'name', 'slug']),
+        ]);
+    }
+
+    public function preview(string $slug): Response
+    {
+        $article = Content::with(['category', 'author', 'featuredImage', 'thumbnail', 'tags'])
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        $seo = SeoMeta::forArticle($article);
+        $seoArr = $seo->toArray();
+        $seoArr['tags'] = $article->tags->pluck('name')->all();
+        $seoArr['noindex'] = true;
+
+        $article->body_first = $this->splitBody($article->body ?? '', true);
+        $article->body_second = $this->splitBody($article->body ?? '', false);
+        $article->body_word_count = $this->wordCount(strip_tags($article->body ?? ''));
+        $article->author_url = $article->author
+            ? route('author.show', ['slug' => $article->author->slug], true)
+            : null;
+
+        return Inertia::render('News/Show', [
+            'seo' => $seoArr,
+            'article' => $article,
         ]);
     }
 

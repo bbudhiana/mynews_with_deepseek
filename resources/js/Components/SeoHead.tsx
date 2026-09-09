@@ -1,28 +1,12 @@
 import { Head } from '@inertiajs/react';
+import type { JsonLd, Seo } from '@/types';
 
 interface SeoProps {
-    seo?: {
-        title?: string;
-        description?: string;
-        url?: string;
-        image?: string | null;
-        type?: string;
-        publishedTime?: string | null;
-        modifiedTime?: string | null;
-        authorName?: string | null;
-        section?: string | null;
-        tags?: string[] | null;
-        siteName?: string | null;
-        noindex?: boolean;
-        publisherLogo?: string | null;
-        publisherUrl?: string | null;
-        sameAs?: string[] | null;
-        searchUrl?: string | null;
-    };
+    seo?: Seo;
     title?: string;
-    jsonLd?: unknown[];
-    organizationJsonLd?: unknown;
-    websiteJsonLd?: unknown;
+    jsonLd?: JsonLd[];
+    organizationJsonLd?: JsonLd;
+    websiteJsonLd?: JsonLd;
 }
 
 export default function SeoHead({

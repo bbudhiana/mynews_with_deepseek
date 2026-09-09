@@ -1,17 +1,9 @@
 import { Link, usePage } from '@inertiajs/react';
-
-interface NavCategory {
-    id: number;
-    name: string;
-    slug: string;
-}
+import type { SharedProps } from '@/types';
 
 export default function Footer() {
-    const { props } = usePage<{
-        navCategories?: NavCategory[];
-        name?: string;
-    }>();
-    const categories = props.navCategories ?? [];
+    const { props } = usePage<SharedProps>();
+    const categories = Array.isArray(props.navCategories) ? props.navCategories : [];
     const brand = props.name ?? 'MyNews';
 
     return (
@@ -36,34 +28,20 @@ export default function Footer() {
                     <h4 className="text-ink mb-4 text-xs font-semibold tracking-wider uppercase">
                         Kategori
                     </h4>
-                    <ul className="space-y-2 text-sm">
-                        {categories.length > 0
-                            ? categories.map((cat) => (
-                                  <li key={cat.id}>
-                                      <Link
-                                          href={`/category/${cat.slug}`}
-                                          className="hover:text-ink transition-colors"
-                                      >
-                                          {cat.name}
-                                      </Link>
-                                  </li>
-                              ))
-                            : [
-                                  ['nasional', 'Nasional'],
-                                  ['internasional', 'Internasional'],
-                                  ['politik', 'Politik'],
-                                  ['ekonomi', 'Ekonomi'],
-                              ].map(([slug, label]) => (
-                                  <li key={slug}>
-                                      <Link
-                                          href={`/category/${slug}`}
-                                          className="hover:text-ink transition-colors"
-                                      >
-                                          {label}
-                                      </Link>
-                                  </li>
-                              ))}
-                    </ul>
+                    {categories.length > 0 ? (
+                        <ul className="space-y-2 text-sm">
+                            {categories.map((cat) => (
+                                <li key={cat.id}>
+                                    <Link
+                                        href={`/category/${cat.slug}`}
+                                        className="hover:text-ink transition-colors"
+                                    >
+                                        {cat.name}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : null}
                 </div>
                 <div>
                     <h4 className="text-ink mb-4 text-xs font-semibold tracking-wider uppercase">

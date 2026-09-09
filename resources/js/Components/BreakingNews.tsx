@@ -1,12 +1,15 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
+import type { SharedProps } from '@/types';
 
 interface BreakingProps {
     items?: { id: number; title: string; slug: string }[];
 }
 
 export default function BreakingNews({ items = [] }: BreakingProps) {
+    const { props } = usePage<SharedProps>();
     if (!items || items.length === 0) return null;
 
+    const baseUrl = props.appUrl ?? '';
     const ld = {
         '@context': 'https://schema.org',
         '@type': 'ItemList',
@@ -14,10 +17,7 @@ export default function BreakingNews({ items = [] }: BreakingProps) {
             '@type': 'ListItem',
             position: idx + 1,
             name: item.title,
-            url:
-                typeof window !== 'undefined'
-                    ? `${window.location.origin}/news/${item.slug}`
-                    : `/news/${item.slug}`,
+            url: `${baseUrl}/news/${item.slug}`,
         })),
     };
 

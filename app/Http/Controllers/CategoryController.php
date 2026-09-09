@@ -43,7 +43,6 @@ class CategoryController extends Controller
             'category' => $category,
             'featured' => $featured,
             'articles' => $articles,
-            'navCategories' => Category::root()->orderBy('name')->get(['id', 'name', 'slug']),
         ]);
     }
 }

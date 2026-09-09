@@ -18,12 +18,18 @@ return new class extends Migration
                 $table->longText('body')->nullable();
                 $table->foreignId('category_id')->nullable()->constrained('categories')->nullOnDelete();
                 $table->foreignId('author_id')->nullable()->constrained('users')->nullOnDelete();
+                $table->foreignId('reviewer_id')->nullable()->constrained('users')->nullOnDelete();
                 $table->foreignId('featured_image_id')->nullable()->constrained('media')->nullOnDelete();
                 $table->foreignId('thumbnail_id')->nullable()->constrained('media')->nullOnDelete();
                 $table->string('status')->default('draft');
+                $table->boolean('breaking_news_flag')->default(false);
+                $table->boolean('editor_pick_flag')->default(false);
+                $table->text('featured_video')->nullable();
                 $table->string('image_caption')->nullable();
                 $table->string('image_credit')->nullable();
+                $table->timestamp('reviewed_at')->nullable();
                 $table->timestamp('published_at')->nullable()->index();
+                $table->index(['status', 'author_id']);
                 $table->timestamps();
             });
         }

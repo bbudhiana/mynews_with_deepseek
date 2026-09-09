@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -24,7 +23,25 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
-            'navCategories' => Cache::remember('nav_categories', 3600, fn () => Category::root()->orderBy('name')->get(['id', 'name', 'slug'])),
+            'appUrl' => url('/'),
+            'navCategories' => $this->navCategories(),
         ];
+    }
+
+    /**
+     * ponytail: DB query is cheap and runs on every render anyway via HomeController
+     * and SitemapController. Caching it across all sessions invites stale-TTL
+     * bugs and stale-data surprises on category edits.
+     */
+    private function navCategories(): array
+    {
+        try {
+            return Category::root()
+                ->orderBy('name')
+                ->get(['id', 'name', 'slug'])
+                ->all();
+        } catch (\Throwable) {
+            return [];
+        }
     }
 }

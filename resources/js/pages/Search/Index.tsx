@@ -4,20 +4,21 @@ import Footer from '@/Components/Footer';
 import AdBanner from '@/Components/AdBanner';
 import SeoHead from '@/Components/SeoHead';
 import { formatDate } from '@/lib/date';
+import { usePage } from '@inertiajs/react';
+import type { ArticleListItem, Paginated, Seo, SharedProps } from '@/types';
 
 interface Props {
-    seo?: any;
-    query?: string;
-    articles?: any;
-    navCategories?: any[];
+    seo?: Seo;
+    query: string;
+    articles: Paginated<ArticleListItem>;
 }
 
 export default function Index({
     seo,
     query = '',
     articles,
-    navCategories,
 }: Props) {
+    const { props } = usePage<SharedProps>();
     const articleList = articles?.data || [];
     const totalArticles = articles?.total || 0;
 
@@ -25,7 +26,7 @@ export default function Index({
         <>
             <SeoHead seo={seo} title={seo?.title} />
             <div className="bg-canvas text-ink min-h-screen">
-                <Header categories={navCategories} />
+                <Header categories={props.navCategories} />
 
                 {/* Top Leaderboard Ad */}
                 <div className="mx-auto max-w-7xl px-4">

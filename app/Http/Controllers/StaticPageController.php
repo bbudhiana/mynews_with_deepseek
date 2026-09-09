@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -191,7 +190,6 @@ class StaticPageController extends Controller
                 'siteName' => config('app.name'),
             ],
             'page' => $data,
-            'navCategories' => Category::root()->orderBy('name')->get(['id', 'name', 'slug']),
         ]);
     }
 }

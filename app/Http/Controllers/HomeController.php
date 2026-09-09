@@ -12,9 +12,7 @@ class HomeController extends Controller
 {
     public function index(): Response
     {
-        $breakingNews = Content::where('status', 'published')
-            ->where('breaking_news_flag', true)
-            ->latest('published_at')
+        $breakingNews = Content::breaking()
             ->take(5)
             ->get(['id', 'title', 'slug', 'published_at']);
 
@@ -28,37 +26,29 @@ class HomeController extends Controller
             ->get();
 
         $heroNews = Content::with(['category', 'author', 'featuredImage', 'thumbnail'])
-            ->where('status', 'published')
             ->whereNotNull('featured_image_id')
             ->latest('published_at')
             ->first();
 
         if (! $heroNews) {
             $heroNews = Content::with(['category', 'author', 'featuredImage', 'thumbnail'])
-                ->where('status', 'published')
                 ->latest('published_at')
                 ->first();
         }
 
         $latestNews = Content::with(['category', 'featuredImage', 'thumbnail'])
-            ->where('status', 'published')
             ->whereNotNull('featured_image_id')
             ->where('id', '!=', $heroNews?->id)
             ->latest('published_at')
             ->take(6)
             ->get();
 
-        $popularNews = Content::where('status', 'published')
-            ->whereNotNull('featured_image_id')
-            ->orderBy('id', 'desc')
+        $popularNews = Content::popular()
             ->take(5)
             ->get(['id', 'title', 'slug', 'published_at']);
 
-        $editorsChoice = Content::with(['category', 'author', 'featuredImage', 'thumbnail'])
-            ->where('status', 'published')
-            ->where('editor_pick_flag', true)
-            ->whereNotNull('featured_image_id')
-            ->latest('published_at')
+        $editorsChoice = Content::editorsPick()
+            ->with(['category', 'author', 'featuredImage', 'thumbnail'])
             ->take(3)
             ->get();
 
@@ -83,7 +73,6 @@ class HomeController extends Controller
             'popularNews' => $popularNews,
             'editorsChoice' => $editorsChoice,
             'categoriesList' => $categoriesList,
-            'navCategories' => Category::root()->orderBy('name')->get(['id', 'name', 'slug']),
         ]);
     }
 }

@@ -1,21 +1,21 @@
 import { Link, router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
-
-interface NavCategory {
-    id: number;
-    name: string;
-    slug: string;
-}
+import type { SharedProps } from '@/types';
 
 interface Props {
-    categories?: NavCategory[];
+    categories?: { id: number; name: string; slug: string }[];
     siteName?: string;
 }
 
-export default function Header({ categories = [], siteName }: Props) {
+export default function Header({ categories, siteName }: Props) {
     const [searchQuery, setSearchQuery] = useState('');
-    const { props } = usePage<{ name?: string }>();
+    const { props } = usePage<SharedProps>();
     const brand = siteName ?? props.name ?? 'MyNews';
+    const safeCategories = Array.isArray(categories)
+        ? categories
+        : Array.isArray(props.navCategories)
+          ? props.navCategories
+          : [];
     const [mobileOpen, setMobileOpen] = useState(false);
 
     const handleSearch = (e: React.FormEvent) => {
@@ -36,9 +36,9 @@ export default function Header({ categories = [], siteName }: Props) {
                         >
                             {brand}
                         </Link>
-                        {categories.length > 0 && (
+                        {safeCategories.length > 0 && (
                             <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
-                                {categories.map((cat) => (
+                                {safeCategories.map((cat) => (
                                     <Link
                                         key={cat.id}
                                         href={`/category/${cat.slug}`}
@@ -84,6 +84,7 @@ export default function Header({ categories = [], siteName }: Props) {
                         >
                             MASUK
                         </Link>
+
                         {/* Mobile hamburger */}
                         <button
                             className="text-ink-meta hover:text-ink flex h-11 w-11 items-center justify-center transition-colors md:hidden"
@@ -120,13 +121,13 @@ export default function Header({ categories = [], siteName }: Props) {
                 </div>
 
                 {/* Mobile nav panel */}
-                {mobileOpen && categories.length > 0 && (
+                {mobileOpen && safeCategories.length > 0 && (
                     <nav
                         id="mobile-nav"
                         className="border-hairline mt-4 grid grid-cols-2 gap-2 border-t pt-4 md:hidden"
                         aria-label="Navigasi kategori"
                     >
-                        {categories.map((cat) => (
+                        {safeCategories.map((cat) => (
                             <Link
                                 key={cat.id}
                                 href={`/category/${cat.slug}`}

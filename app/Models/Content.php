@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
+use Database\Factories\ContentFactory;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Carbon;
+use Mews\Purifier\Facades\Purifier;
 
 /**
  * @property int $id
@@ -28,13 +32,57 @@ use Illuminate\Support\Carbon;
  */
 class Content extends Model
 {
+    /** @use HasFactory<ContentFactory> */
+    use HasFactory;
+
     protected $table = 'contents';
 
     protected $guarded = [];
 
     protected $casts = [
         'published_at' => 'datetime',
+        'reviewed_at' => 'datetime',
+        'breaking_news_flag' => 'boolean',
+        'editor_pick_flag' => 'boolean',
     ];
+
+    /**
+     * @param  Builder<Content>  $query
+     * @return Builder<Content>
+     */
+    public function scopePublished(Builder $query): Builder
+    {
+        return $query->where('status', 'published');
+    }
+
+    /**
+     * @param  Builder<Content>  $query
+     * @return Builder<Content>
+     */
+    public function scopeBreaking(Builder $query): Builder
+    {
+        return $query->published()->where('breaking_news_flag', true);
+    }
+
+    /**
+     * @param  Builder<Content>  $query
+     * @return Builder<Content>
+     */
+    public function scopeEditorsPick(Builder $query): Builder
+    {
+        return $query->published()->where('editor_pick_flag', true);
+    }
+
+    /**
+     * @param  Builder<Content>  $query
+     * @return Builder<Content>
+     */
+    public function scopePopular(Builder $query): Builder
+    {
+        return $query->published()
+            ->whereNotNull('featured_image_id')
+            ->latest('published_at');
+    }
 
     /**
      * @return BelongsTo<Category, $this>
@@ -74,5 +122,15 @@ class Content extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class, 'content_tags', 'content_id', 'tag_id');
+    }
+
+    public function setBodyAttribute(?string $value): void
+    {
+        $this->attributes['body'] = $value === null ? null : Purifier::clean($value);
+    }
+
+    public function setExcerptAttribute(?string $value): void
+    {
+        $this->attributes['excerpt'] = $value === null ? null : Purifier::clean($value, 'excerpt');
     }
 }

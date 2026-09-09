@@ -3,6 +3,8 @@ import Footer from '@/Components/Footer';
 import AdBanner from '@/Components/AdBanner';
 import SeoHead from '@/Components/SeoHead';
 import { formatDate } from '@/lib/date';
+import { usePage } from '@inertiajs/react';
+import type { Seo, SharedProps } from '@/types';
 
 interface Section {
     heading: string;
@@ -19,17 +21,17 @@ interface StaticPageData {
 }
 
 interface Props {
-    seo?: any;
+    seo?: Seo;
     page: StaticPageData;
-    navCategories?: any[];
 }
 
-export default function StaticPage({ seo, page, navCategories }: Props) {
+export default function StaticPage({ seo, page }: Props) {
+    const { props } = usePage<SharedProps>();
     return (
         <>
             <SeoHead seo={seo} title={seo?.title} />
             <div className="bg-canvas text-ink min-h-screen">
-                <Header categories={navCategories} />
+                <Header categories={props.navCategories} />
 
                 <div className="mx-auto max-w-7xl px-4">
                     <AdBanner position="top-leaderboard" />

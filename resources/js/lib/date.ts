@@ -24,18 +24,3 @@ export function formatDateShort(
         year: 'numeric',
     });
 }
-
-/**
- * Wrap formatted date string with a <time> element carrying the machine-readable
- * dateTime attribute for Schema.org completeness.
- */
-export function formatDateTime(
-    date: string | Date | null | undefined,
-    formatter: (d: string | Date | null | undefined) => string = formatDate,
-): { iso: string; html: string } {
-    const d = date ? new Date(date) : new Date();
-    const iso = Number.isNaN(d.getTime())
-        ? new Date().toISOString()
-        : d.toISOString();
-    return { iso, html: formatter(date) };
-}

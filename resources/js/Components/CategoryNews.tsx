@@ -1,25 +1,11 @@
 import { Link } from '@inertiajs/react';
 import { formatDate } from '@/lib/date';
+import type { ArticleListItem, Category } from '@/types';
 
-interface ArticleItem {
-    id: number;
-    title: string;
-    slug: string;
-    published_at: string;
-    created_at: string;
-    featured_image: any;
-    thumbnail: any;
-}
-
-interface CategoryData {
-    id: number;
-    name: string;
-    slug: string;
-    contents: ArticleItem[];
-}
+type CategoryWithArticles = Category & { contents: ArticleListItem[] };
 
 interface CategoryNewsProps {
-    data?: CategoryData;
+    data?: CategoryWithArticles;
     title?: string;
 }
 

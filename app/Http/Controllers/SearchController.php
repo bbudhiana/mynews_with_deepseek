@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Content;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -12,16 +12,26 @@ class SearchController extends Controller
 {
     public function index(Request $request): Response
     {
-        $query = $request->input('q', '');
+        $query = trim((string) $request->input('q', ''));
+        $searchable = mb_strlen($query) >= 3;
 
         $articles = Content::with(['category', 'author', 'featuredImage', 'thumbnail'])
-            ->where('status', 'published')
-            ->when($query, function ($q) use ($query) {
-                $q->where(function ($subQ) use ($query) {
-                    $subQ->where('title', 'like', "%{$query}%")
-                        ->orWhere('excerpt', 'like', "%{$query}%")
-                        ->orWhere('body', 'like', "%{$query}%");
-                });
+            ->published()
+            ->when($searchable, function ($q) use ($query) {
+                $driver = DB::connection()->getDriverName();
+
+                if (in_array($driver, ['mysql', 'mariadb'], true)) {
+                    $q->whereRaw(
+                        'MATCH(title, excerpt, body) AGAINST (? IN BOOLEAN MODE)',
+                        [$query.'*'],
+                    );
+                } else {
+                    $like = '%'.$query.'%';
+                    $q->where(function ($subQ) use ($like) {
+                        $subQ->where('title', 'like', $like)
+                            ->orWhere('excerpt', 'like', $like);
+                    });
+                }
             })
             ->latest('published_at')
             ->paginate(10)
@@ -38,7 +48,6 @@ class SearchController extends Controller
             ],
             'query' => $query,
             'articles' => $articles,
-            'navCategories' => Category::root()->orderBy('name')->get(['id', 'name', 'slug']),
         ]);
     }
 }

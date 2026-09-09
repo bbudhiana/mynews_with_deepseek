@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Content;
 use App\Models\User;
 use App\Support\SeoMeta;
@@ -14,11 +13,7 @@ class AuthorController extends Controller
 {
     public function show(string $slug): Response
     {
-        $author = Str::contains($slug, '|') || is_numeric($slug)
-            ? User::find((int) $slug)
-            : User::all()->first(fn ($u) => Str::slug($u->name) === $slug);
-
-        abort_if($author === null, 404);
+        $author = User::where('slug', $slug)->firstOrFail();
 
         $articles = Content::with(['category', 'featuredImage', 'thumbnail'])
             ->where('author_id', $author->id)
@@ -46,7 +41,6 @@ class AuthorController extends Controller
             ],
             'author' => $author,
             'articles' => $articles,
-            'navCategories' => Category::root()->orderBy('name')->get(['id', 'name', 'slug']),
         ]);
     }
 }

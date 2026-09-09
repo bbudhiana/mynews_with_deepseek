@@ -1,25 +1,27 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import Header from '@/Components/Header';
 import Footer from '@/Components/Footer';
 import AdBanner from '@/Components/AdBanner';
 import SeoHead from '@/Components/SeoHead';
 import { formatDate } from '@/lib/date';
+import type { ArticleListItem, Author, JsonLd, Paginated, Seo, SharedProps } from '@/types';
 
 interface Props {
-    seo?: any;
-    author: any;
-    articles: any;
-    navCategories?: any[];
+    seo?: Seo;
+    jsonLd?: JsonLd[];
+    author: Author;
+    articles: Paginated<ArticleListItem>;
 }
 
-export default function Show({ seo, author, articles, navCategories }: Props) {
+export default function Show({ seo, jsonLd, author, articles }: Props) {
+    const { props } = usePage<SharedProps>();
     const list = articles?.data || [];
 
     return (
         <>
-            <SeoHead seo={seo} title={seo?.title} />
+            <SeoHead seo={seo} jsonLd={jsonLd} title={seo?.title} />
             <div className="bg-canvas text-ink min-h-screen">
-                <Header categories={navCategories} />
+                <Header categories={props.navCategories} />
 
                 <div className="mx-auto max-w-7xl px-4">
                     <AdBanner position="top-leaderboard" />

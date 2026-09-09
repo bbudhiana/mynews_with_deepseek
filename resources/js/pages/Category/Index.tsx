@@ -1,16 +1,16 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import Header from '@/Components/Header';
 import Footer from '@/Components/Footer';
 import AdBanner from '@/Components/AdBanner';
 import SeoHead from '@/Components/SeoHead';
 import { formatDate } from '@/lib/date';
+import type { ArticleListItem, Category, Paginated, Seo, SharedProps } from '@/types';
 
 interface Props {
-    seo?: any;
-    category: any;
-    featured: any;
-    articles: any;
-    navCategories?: any[];
+    seo?: Seo;
+    category: Category;
+    featured: ArticleListItem | null;
+    articles: Paginated<ArticleListItem>;
 }
 
 export default function Index({
@@ -18,8 +18,8 @@ export default function Index({
     category,
     featured,
     articles,
-    navCategories,
 }: Props) {
+    const { props } = usePage<SharedProps>();
     const categoryName = category?.name || 'Nasional';
     const currentPage = articles?.current_page || 1;
     const lastPage = articles?.last_page || 1;
@@ -44,7 +44,7 @@ export default function Index({
                 </Head>
             )}
             <div className="bg-canvas text-ink min-h-screen">
-                <Header categories={navCategories} />
+                <Header categories={props.navCategories} />
 
                 {/* Top Leaderboard Ad */}
                 <div className="mx-auto max-w-7xl px-4">
