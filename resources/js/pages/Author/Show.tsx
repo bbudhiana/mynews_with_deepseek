@@ -4,7 +4,14 @@ import Footer from '@/Components/Footer';
 import AdBanner from '@/Components/AdBanner';
 import SeoHead from '@/Components/SeoHead';
 import { formatDate } from '@/lib/date';
-import type { ArticleListItem, Author, JsonLd, Paginated, Seo, SharedProps } from '@/types';
+import type {
+    ArticleListItem,
+    Author,
+    JsonLd,
+    Paginated,
+    Seo,
+    SharedProps,
+} from '@/types';
 
 interface Props {
     seo?: Seo;

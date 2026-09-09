@@ -7,7 +7,13 @@ import DateTime from '@/Components/DateTime';
 import ShareButtons from '@/Components/ShareButtons';
 import { formatDate } from '@/lib/date';
 import { usePage } from '@inertiajs/react';
-import type { Article, ArticleListItem, JsonLd, Seo, SharedProps } from '@/types';
+import type {
+    Article,
+    ArticleListItem,
+    JsonLd,
+    Seo,
+    SharedProps,
+} from '@/types';
 
 interface Props {
     seo?: Seo;

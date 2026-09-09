@@ -4,7 +4,13 @@ import Footer from '@/Components/Footer';
 import AdBanner from '@/Components/AdBanner';
 import SeoHead from '@/Components/SeoHead';
 import { formatDate } from '@/lib/date';
-import type { ArticleListItem, Category, Paginated, Seo, SharedProps } from '@/types';
+import type {
+    ArticleListItem,
+    Category,
+    Paginated,
+    Seo,
+    SharedProps,
+} from '@/types';
 
 interface Props {
     seo?: Seo;
@@ -13,12 +19,7 @@ interface Props {
     articles: Paginated<ArticleListItem>;
 }
 
-export default function Index({
-    seo,
-    category,
-    featured,
-    articles,
-}: Props) {
+export default function Index({ seo, category, featured, articles }: Props) {
     const { props } = usePage<SharedProps>();
     const categoryName = category?.name || 'Nasional';
     const currentPage = articles?.current_page || 1;

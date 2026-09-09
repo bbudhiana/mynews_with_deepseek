@@ -46,6 +46,9 @@ export default defineConfig({
             'resources/js/components/ui/*',
             'resources/js/routes/**',
             'resources/js/wayfinder/**',
+            '.agents/**',
+            'AGENTS.md',
+            'boost.json',
         ],
         options: {
             denyWarnings: true,

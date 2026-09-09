@@ -32,14 +32,22 @@ class HandleInertiaRequests extends Middleware
      * ponytail: DB query is cheap and runs on every render anyway via HomeController
      * and SitemapController. Caching it across all sessions invites stale-TTL
      * bugs and stale-data surprises on category edits.
+     *
+     * @return array<int, array{id: int, name: string, slug: string}>
      */
     private function navCategories(): array
     {
         try {
-            return Category::root()
+            $rows = Category::root()
                 ->orderBy('name')
                 ->get(['id', 'name', 'slug'])
-                ->all();
+                ->map(fn (Category $c) => [
+                    'id' => $c->id,
+                    'name' => $c->name,
+                    'slug' => $c->slug,
+                ]);
+
+            return array_values($rows->all());
         } catch (\Throwable) {
             return [];
         }

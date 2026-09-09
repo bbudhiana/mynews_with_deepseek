@@ -3,7 +3,9 @@ import type { SharedProps } from '@/types';
 
 export default function Footer() {
     const { props } = usePage<SharedProps>();
-    const categories = Array.isArray(props.navCategories) ? props.navCategories : [];
+    const categories = Array.isArray(props.navCategories)
+        ? props.navCategories
+        : [];
     const brand = props.name ?? 'MyNews';
 
     return (

@@ -105,7 +105,9 @@ export default function Home({
                                                                 loading="lazy"
                                                                 decoding="async"
                                                                 className="h-6 w-6 rounded-full object-cover ring-1 ring-white/20"
-                                                                onError={(e) => {
+                                                                onError={(
+                                                                    e,
+                                                                ) => {
                                                                     e.currentTarget.style.display =
                                                                         'none';
                                                                 }}
@@ -172,16 +174,14 @@ export default function Home({
                                                 <div>
                                                     <img
                                                         src={
-                                                            news
-                                                                .featured_image
+                                                            news.featured_image
                                                                 ?.url ||
                                                             news.thumbnail
                                                                 ?.url ||
                                                             ''
                                                         }
                                                         srcSet={
-                                                            news
-                                                                .featured_image
+                                                            news.featured_image
                                                                 ?.srcset ||
                                                             undefined
                                                         }

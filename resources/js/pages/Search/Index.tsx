@@ -13,11 +13,7 @@ interface Props {
     articles: Paginated<ArticleListItem>;
 }
 
-export default function Index({
-    seo,
-    query = '',
-    articles,
-}: Props) {
+export default function Index({ seo, query, articles }: Props) {
     const { props } = usePage<SharedProps>();
     const articleList = articles?.data || [];
     const totalArticles = articles?.total || 0;
